@@ -1,0 +1,18 @@
+.wrapper-category-item {
+    border: solid black 1px;
+    height: 500px;
+    width: 440px;
+    margin-top: 60px
+}
+
+.img-wrapper {
+    border: solid black 1px;
+    height: 450px;
+}
+
+.title-wrapper {
+    height: 50px;
+    border: solid red 1px;
+    font-size: 24px;
+    text-align: center;
+}

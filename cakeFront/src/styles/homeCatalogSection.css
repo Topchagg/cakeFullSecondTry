@@ -1,0 +1,12 @@
+.home-catalog-section {
+    height: 634px;
+    width: 1600px;
+    margin: 0 auto;
+    margin-top: 200px;
+    text-align: center;
+}
+
+.catalog-items-wrapper {
+    display: flex;
+    justify-content: space-around;
+}

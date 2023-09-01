@@ -1,0 +1,20 @@
+.home-open-section {
+    width: 1500px;
+    height: 655px;
+    margin:  auto;
+    margin-top: 70px;
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+.home-open-text-wrapper {
+    width: 718px;
+    height: 334px;
+    margin-top: 120px;
+}
+
+.home-open-img-wrapper {
+    width: 655px;
+    height: 655px;
+}

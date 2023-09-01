@@ -1,0 +1,10 @@
+.large-text {
+    font-size: 70px;
+}
+
+.small-text {
+    font-size: 18px;
+    color: gray;
+    margin-top: 10px;
+    font-weight: 700;
+}

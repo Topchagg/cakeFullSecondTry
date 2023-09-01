@@ -1,0 +1,29 @@
+.wrapper-of-item {
+    width: 300px;
+    height: 88px;
+    display: flex;
+    margin-top: 60px;
+}
+
+.wrapper-text-item {
+    width: 300px;
+    height: 88px;
+}
+
+
+.big-text {
+    font-size: 18px;
+    color: #2E2927;
+}
+
+.small-text {
+    color: #7777;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.small-text-wrapper {
+    width: 120%;
+    text-align: left;
+    margin-left: 20px;
+}

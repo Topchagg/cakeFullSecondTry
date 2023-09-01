@@ -1,0 +1,13 @@
+.linkButton {
+    width: 200px;
+    height: 53px;
+    border: solid black 1px;
+    background-color: inherit;
+    margin-top: 50px;
+    cursor: pointer;
+    transition: 400ms;
+}
+
+.linkButton:hover {
+    border-radius: 30%;
+}
