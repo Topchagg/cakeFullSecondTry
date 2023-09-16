@@ -1,0 +1,126 @@
+.footer {
+    height: 430px;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 318px;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-menu-footer-wrapper {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.logo-media-wrapper {
+    width: 190px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+}
+
+.media-wrapper {
+    width: 100%;
+    margin-top: 20px;
+    height: 40px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.info-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.info-block {
+    height: 250px;
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.title-info-block {
+    font-size: 24px;
+}
+
+.nav-items-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 190px;
+    width: 100px;
+}
+
+.nav-item-footer {
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.get-in-touch {
+    width: 320px;
+    text-align: left;
+}
+
+.email-input-footer {
+    outline: none;
+    border: none;
+    border-bottom: gray 1px solid;
+    margin-top: 5px;
+    margin-left: 10px;
+    width: 80%;
+
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-left: 10px;
+    margin-top: 30px;
+}
+
+.privace-policy {
+    width: 433px;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+}
+
+.company-data-set {
+    display: flex;
+    justify-content: space-around;
+}
+
+.data-item {
+    margin-top: 10px;
+}
+
+.rights-reserved {
+    width: 280px;
+    height: 30px;
+    margin-top: 30px;
+}
+
+.accept-btn {
+    background-color: inherit;
+    border: solid black 1px;
+    cursor: pointer;
+    margin-top: 40px;
+    transition: 20ms;
+    height: 22px;
+    width: 50%;
+    margin-left: 10px;
+}
+
+.accept-btn:hover {
+   border: solid black 2px;
+}
+
+.text-reserved {
+    margin-left: 15px;
+}

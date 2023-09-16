@@ -9,9 +9,8 @@
 
 .star {
     height: 40px;
-    width: 40px;
     cursor: pointer;
-    transition: 400ms;
+    width: 40px;
     position: absolute;
 }
 
@@ -73,6 +72,6 @@ border-radius: 30%;
     }
 
 .add-button-pic {
-    margin-left: 3px;
+    margin-left: 1px;
     margin-top: 2px;
 }

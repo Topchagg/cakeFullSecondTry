@@ -6,8 +6,10 @@
 }
 
 .wrapper-text-item {
-    width: 300px;
+    text-align: left;
+    width: 340px;
     height: 88px;
+    margin-left: 20px;
 }
 
 
@@ -16,14 +18,13 @@
     color: #2E2927;
 }
 
-.small-text {
-    color: #7777;
-    margin-top: 10px;
-    font-size: 16px;
-}
-
 .small-text-wrapper {
     width: 120%;
     text-align: left;
-    margin-left: 20px;
 }
+
+.small-text {
+    color: #7777;
+    margin-top: 10px;
+}
+

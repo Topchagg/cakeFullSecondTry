@@ -3,7 +3,7 @@ import '../styles/bestsellerLine.css'
 function BestsellerLine() {
     return (
         <div className="bestseller-line">
-            bestseller
+            BESTSELLER
         </div>
     )
 }

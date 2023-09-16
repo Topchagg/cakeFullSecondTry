@@ -1,6 +1,10 @@
+import ItemsWrapper from "../sections/catalogItemWrapper"
+
 function Catalog () {
     return (
-        <h3></h3>
+        <>
+          <ItemsWrapper/>  
+        </>
     )
 }
 

@@ -7,6 +7,7 @@ import HomeChooseUsSection from "../sections/homeChooseUsSection"
 import HomeCatalogSection from "../sections/homeCatalogSection"
 import HomeCommentsSection from "../sections/homeCommentsSection"
 import HomeBestsellerSection from "../sections/homeBestsellerSection"
+import HomeIndividualOrderSection from '../sections/homeIndividualOrderSection'
 
 
 function Home () {
@@ -18,6 +19,7 @@ function Home () {
             <HomeCatalogSection/>
             <HomeCommentsSection/>
             <HomeBestsellerSection/>
+            <HomeIndividualOrderSection/>
         </>
     )
 }

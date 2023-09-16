@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import {Link} from 'react-router-dom'
+
 import '../styles/ProductItemShowcase.css'
 
 import BestsellerLine from './bestsellerLine'
@@ -11,6 +13,7 @@ function ProductItem (props) {
     function handleOnMouseUp() {
         setInfoBestseller(!infoBestseller)
     }
+   
 
     function handleOnMouseDown() {
         setInfoBestseller(!infoBestseller)
@@ -19,18 +22,18 @@ function ProductItem (props) {
     return (
         <div className="product-item-wrapper">
             <div className="product-img-wrapper">
-                <div className="star-wrapper">{props.bestseller && <img  onMouseEnter={handleOnMouseUp} onMouseLeave={handleOnMouseDown} className='star' src="yellow-star.png" alt=""/>}{infoBestseller && <BestsellerLine/>}</div>
-                <img className='product-item-img' src={props.img} alt="" />
+                <Link to='Catalog'><div className="star-wrapper">{props.bestseller && <img  onMouseEnter={handleOnMouseUp} onMouseLeave={handleOnMouseDown} className='star' src="yellow-star.png" alt=""/>}{infoBestseller && <BestsellerLine/>}</div></Link>
+                <img src="Rectangle 8.png" alt="" />
             </div>
             <div className="product-data-wrapper">
                 <div className="name-of-product-wrapper">
                     <div className="name-of-product">
-                        Something yes
+                        {props.name}
                     </div>
                 </div>
                 <div className="add-button-n-price-wrapper">
                     <div className="price-of-item">
-                        123$
+                        {props.price} $
                     </div>
                     <div className="add-btn">
                         <button className='add-button' type='button'><img className='add-button-pic' src="Vector (2).png" alt="" /></button>

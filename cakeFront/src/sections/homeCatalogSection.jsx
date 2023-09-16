@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { categoryItemsSlice } from '../store'
+import { categoryItemFetch } from '../store'
 import '../styles/homeCatalogSection.css'
 
 
@@ -7,8 +7,8 @@ import CategoryItem from '../components/categoryItem'
 
 function HomeCatalogSection () {
 
-    const FetchCategoryItems =  categoryItemsSlice((state) => state.FetchCategoryItems)
-    const categoryItems =  categoryItemsSlice((state) => state.categoryItems)
+    const FetchCategoryItems =  categoryItemFetch((state) => state.FetchCategoryItems)
+    const categoryItems =  categoryItemFetch((state) => state.categoryItems)
 
     const [show, setShow] = useState(false)
 
@@ -21,7 +21,7 @@ function HomeCatalogSection () {
             <div className="large-text">Catalog</div>
             <div className="catalog-items-wrapper">
                 { categoryItems.map((categoryItem) => (
-                    <CategoryItem/>
+                    <CategoryItem title={categoryItem.nameOfCategory}/>
                 )) }
             </div>
         </div>

@@ -1,0 +1,102 @@
+.individual-order-section {
+    width: 90%;
+    margin: 190px auto;
+    height: 770px;
+    background-image: url('./background.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+}
+
+.individual-order-form-wrapper {
+    height: 610px;
+    width: 560px;
+    float: left;
+    margin-left: 60px;
+    margin-top: 40px;
+}
+
+.individual-order-form {
+    margin-top: 60px;
+}
+
+.label-input-wrapper {
+    flex-direction: column;
+    display: flex;
+}
+
+.form-label {
+    margin-top: 20px;
+    font-size: 20px;
+    color: rgb(36, 35, 35);
+}
+
+.form-input {
+    border: none;
+    border-bottom: solid 1px #7777;
+    background-color: inherit;
+    width: 80%;
+    margin-top: 16px;
+    outline: none;
+}
+
+.attach-photo-inv {
+    display: none;
+}
+
+.attach-btn {
+    width: 200px;
+    height: 40px;
+    border: solid gray 1px;
+    margin-top: 30px;
+    background-color: #7777;
+    cursor: pointer;
+    display: flex;
+    transition: 400ms;
+}
+
+.attach-btn:hover {
+    border-radius: 15%;
+}
+
+
+.attach-btn-text {
+    color: white;
+    font-size: 20px;
+    margin-top: 8px;
+    margin-left: 20px;
+}
+
+.pin {
+    width: 30px;
+    height: 30px;
+    margin-top: 5px;
+    float: left;
+}
+
+
+
+.submit-btn {
+    text-align: center;
+    font-size: 22px;
+    background-color: inherit;
+    border: solid black 1px;
+    cursor: pointer;
+    margin-top: 52px;
+    transition: 400ms;
+    width: 302px;
+    height: 56px;
+}
+
+.submit-btn:hover {
+    border-radius: 15%;
+}
+
+.attach-small-text {
+    width: 363px;
+}

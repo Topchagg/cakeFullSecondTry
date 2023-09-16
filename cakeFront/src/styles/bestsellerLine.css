@@ -1,12 +1,10 @@
 .bestseller-line {
     height: 20px;
-    width: 245px;
-    transition: 400ms;
-    background-color: white;
+    width: 360px;
     position: absolute;
     margin-left: 40px;
-    border-radius: 30%;
-    margin-top: 10px;
+    margin-top: -30px;
+    font-size: 24px;
 }
 
 
