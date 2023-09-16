@@ -17,6 +17,15 @@ function HomeBestsellerSection () {
     const decrimentPage = forShowCaseFetch(state => (state.decrimentPage))
     const fetchBestsellersForShowcase = forShowCaseFetch(state => (state.fetchBestsellersForShowcase))
 
+
+    function increment () {
+        incrementPage(page)
+    }
+
+    function decriment() {
+        decrimentPage(page)
+    }
+
     useEffect(() => {
       fetchBestsellersForShowcase()
      },[page])
@@ -32,10 +41,10 @@ function HomeBestsellerSection () {
             </div>
             <div className="carousel-btn-wrapper">
                 <div className="carousel-wrapper">
-                    <button type='button' onClick={decrimentPage} className="decriment-btn carousel-btn">
+                    <button type='button' onClick={decriment} className="decriment-btn carousel-btn">
                         &laquo;	
                     </button>
-                    <button type='button' onClick={incrementPage} className="increment-btn carousel-btn">
+                    <button type='button' onClick={increment} className="increment-btn carousel-btn">
                         &raquo;
                     </button>
                 </div>

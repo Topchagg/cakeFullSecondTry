@@ -22,7 +22,7 @@ function ProductItem (props) {
     return (
         <div className="product-item-wrapper">
             <div className="product-img-wrapper">
-                <Link to='Catalog'><div className="star-wrapper">{props.bestseller && <img  onMouseEnter={handleOnMouseUp} onMouseLeave={handleOnMouseDown} className='star' src="yellow-star.png" alt=""/>}{infoBestseller && <BestsellerLine/>}</div></Link>
+                <div className="star-wrapper">{props.bestseller && <img  onMouseEnter={handleOnMouseUp} onMouseLeave={handleOnMouseDown} className='star' src="yellow-star.png" alt=""/>}{infoBestseller && <BestsellerLine/>}</div>
                 <img src="Rectangle 8.png" alt="" />
             </div>
             <div className="product-data-wrapper">

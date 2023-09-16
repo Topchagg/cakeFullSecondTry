@@ -3,9 +3,14 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
+from django.db.models import Q
 
 from .models import *
 from .serializers import *
+
+
+
+
 
 
 
@@ -41,10 +46,29 @@ def getBestsellers(request):
 @api_view(['GET',])
 def getItems(request):
     if request.method == "GET":
-        filterBestsellers = request.query_params.get('')
-        filterMaxPrice = request.query_params.get('')
-        filterMinPrice = request.query_params.get('')
-        filterRating = request.query_params.get('')
+
+        allItems = Item.objects.all()
+
+        filterBestsellers = request.GET.get('bestsellerFilter')
+        maxPrice = request.GET.get('maxPrice')
+        minPrice = request.GET.get('minPrice')
+
+        filters = Q()
+        if filterBestsellers == 'true':
+            filters |= Q(BestsellerItem = True)
+        if minPrice:
+            filters &= Q(priceOfItem__gte=minPrice)
+        if maxPrice:
+            filters &= Q(priceOfItem__lte=maxPrice)
+
+        neededItems = allItems.filter(filters)
+        paginator = catalogPaginator()
+        paginatedData = paginator.paginate_queryset(neededItems, request)
+        serializedItems = SerializeItems(paginatedData, many=True)
+        data = serializedItems.data
+        return Response(data, status=status.HTTP_200_OK)
+    
+
         
 
 
@@ -55,9 +79,8 @@ def getItems(request):
 
 class bestsellerPaginator(PageNumberPagination):
     page_size = 3
-    page_size_query_param = 'page_size'
     max_page_size = 3
 
 class catalogPaginator(PageNumberPagination):
-    page_size = 16
-    max_page_size = 16
+    page_size = 3
+    max_page_size = 3

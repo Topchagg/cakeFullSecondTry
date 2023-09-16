@@ -9,7 +9,7 @@ export const categoryItemFetch = create((set) => ({
 
         const result = await fetch('http://127.0.0.1:8000/getCategories/?showcase=' + params)
         const json = await result.json()
-        set({categoryItems:json})
+        set((state) => ({categoryItems:json}))
 
     })
 
@@ -25,28 +25,45 @@ export const forShowCaseFetch = create((set) => ({
         const result = await fetch('http://127.0.0.1:8000/getBestsellers/?page=' + state.page)
         if (result.status === 404) {
             if (state.page === 0){
-                set({page: 1})
+                set((state) => ({page: 1}))
             }
             else {
-                set({page: state.page -1})
+                set((state) => ({page: state.page -1}))
             }
         }
         else {
             const json = await  result.json()
-            set({bestsellers: json})
+            set((state) => ({bestsellers: json}))
         }
     }),
     
-    incrementPage: () => set(async(state) => {set ({page: state.page + 1})}),
+    incrementPage: (page) => set(async(state) => {set ({page: page + 1})}),
 
-    decrimentPage: () => set(async(state) => {set ({page: state.page - 1})})
+    decrimentPage: (page) => set(async(state) => {set ({page: page - 1})})
 }))
 
 export const productItemFetch = create((set) => ({
     neededItems: [],
+    page: 1,
 
-    fetchNeededItems: () => set(async (state) => {
-        const result = fetch('')
+    incrementPage: (page) => set(async(state) => {set ({page: page + 1})}),
+
+    decrimentPage: (page) => set(async(state) => {set ({page: page - 1})}),
+
+    fetchNeededItems: (minPrice, maxPrice, bestsellers, page) => set(async (state) => {
+        const result = await fetch('http://127.0.0.1:8000/getItems/?bestsellerFilter=' + bestsellers + '&&maxPrice=' + maxPrice + '&&minPrice=' + minPrice + '&&page=' + page)
+        if (result.status === 404) {
+            if (state.page === 0){
+                set((state) => ({page: 1}))
+            }
+            else {
+                set((state) => ({page: state.page -1}))
+            }
+        }
+        else {
+            const json = await result.json()
+            set((state) => ({neededItems: json}))
+        }
     })
     
 }))
