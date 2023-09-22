@@ -5,7 +5,7 @@ import About from './pages/About'
 import Catalog from './pages/Catalog'
 import Delivery from './pages/Delivery'
 import Contact from './pages/Contact'
-
+import ItemsWrapper from './sections/catalogItemsWrapper'
 import Layout from './pages/layout'
 
 function App() {
@@ -20,6 +20,9 @@ function App() {
           <Route path='Catalog' element={<Catalog/>} ></Route>
           <Route path="Delivery" element={<Delivery/>} ></Route>
           <Route path='Contact' element={<Contact/>}></Route>
+
+
+          <Route path="Catalog/:slug" element={<ItemsWrapper/>}></Route>
         </Route>
     </Routes>
     </>

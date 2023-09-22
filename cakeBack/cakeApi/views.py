@@ -9,8 +9,7 @@ from .models import *
 from .serializers import *
 
 
-
-
+from .tools import findBiggestNumber
 
 
 
@@ -21,11 +20,14 @@ def getCategories(request):
     if request.method == "GET":
         showcase = request.query_params.get('showcase')
         if showcase == 'true':
-            neededCategories =  Category.objects.all()[:1]
+            neededCategories =  Category.objects.all()[:3]
         else:
             neededCategories =  Category.objects.all()
 
-    serializedneededCategory = SerializeCategories(neededCategories, many=True)
+    
+    paginator = catalogPaginator()
+    paginatedData = paginator.paginate_queryset(neededCategories, request)
+    serializedneededCategory = SerializeCategories(paginatedData, many=True)
     dataOfItems = serializedneededCategory.data
     return Response(dataOfItems, status=status.HTTP_200_OK)
 
@@ -35,9 +37,10 @@ def getCategories(request):
 def getBestsellers(request):
     if request.method == "GET":
         neededItems = Item.objects.filter(BestsellerItem = True)
-        paginator = bestsellerPaginator()
+        paginator = showcasePaginator()
         paginatedData = paginator.paginate_queryset(neededItems,request)
 
+    paginator = catalogPaginator()
     serializedItems = SerializeItems(paginatedData, many=True) 
     dataOfNeededItems = serializedItems.data
     return Response(dataOfNeededItems)
@@ -48,6 +51,8 @@ def getItems(request):
     if request.method == "GET":
 
         allItems = Item.objects.all()
+
+        biggestNumber = findBiggestNumber(allItems)
 
         filterBestsellers = request.GET.get('bestsellerFilter')
         maxPrice = request.GET.get('maxPrice')
@@ -66,7 +71,7 @@ def getItems(request):
         paginatedData = paginator.paginate_queryset(neededItems, request)
         serializedItems = SerializeItems(paginatedData, many=True)
         data = serializedItems.data
-        return Response(data, status=status.HTTP_200_OK)
+        return Response([data, biggestNumber], status=status.HTTP_200_OK)
     
 
         
@@ -77,10 +82,10 @@ def getItems(request):
 
 
 
-class bestsellerPaginator(PageNumberPagination):
+class showcasePaginator(PageNumberPagination):
     page_size = 3
     max_page_size = 3
 
 class catalogPaginator(PageNumberPagination):
-    page_size = 3
-    max_page_size = 3
+    page_size = 15
+    max_page_size = 15

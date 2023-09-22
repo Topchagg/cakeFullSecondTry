@@ -36,7 +36,7 @@ function ProductItem (props) {
                         {props.price} $
                     </div>
                     <div className="add-btn">
-                        <button className='add-button' type='button'><img className='add-button-pic' src="Vector (2).png" alt="" /></button>
+                        <button className='add-button' type='button'><img className='add-button-pic' src="Vector(2).png" alt="" /></button>
                     </div>
                 </div>
             </div>

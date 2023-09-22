@@ -1,6 +1,7 @@
 .product-item-wrapper {
     height: 520px;
     width: 440px;
+    border: solid black 1px;
 }
 
 .star-wrapper {
@@ -16,9 +17,10 @@
 
 
 
-.product-item-img {
+.product-img-wrapper {
     height: 440px;
     width: 440px;
+    border: solid red 2px;
 }
 
 
@@ -32,7 +34,7 @@
 
 .name-of-product-wrapper {
     width: 230px;
-    font-size: 24px;
+    font-size: 30px;
     text-align: left;
 }
 

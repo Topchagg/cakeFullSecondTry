@@ -1,8 +1,0 @@
-.items-wrapper {
-    display: grid;
-    margin-top: 120px;
-    grid-template-columns: repeat(3, 440px);
-    grid-auto-rows: 520px;
-    row-gap: 100px;
-}   
-

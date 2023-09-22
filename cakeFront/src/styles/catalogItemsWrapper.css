@@ -1,0 +1,17 @@
+
+.catalog-filter-section {
+    width: 100%;
+    border: solid red 1px;
+    height: 150px;
+    margin-top: 50px;
+}
+
+.items-wrapper {
+    display: grid;
+    margin-top: 20px;
+    grid-template-columns: repeat(3, 440px);
+    grid-auto-rows: 520px;
+    row-gap: 100px;
+}   
+
+

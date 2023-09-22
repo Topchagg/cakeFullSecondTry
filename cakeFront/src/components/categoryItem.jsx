@@ -5,16 +5,18 @@ import '../styles/categoryItem.css'
 
 function CategoryItem(props) {
     return (
-        <Link to='/Catalog'>
         <div className="wrapper-category-item">
+            <Link to={"catalog/" + props.slug}>
             <div className="img-wrapper">
                 <img src={props.img}alt="" />
             </div>
+            </Link>
+            
             <div className="title-wrapper">
-                {props.title}
+                
+                <div className="title">{props.title}</div>
             </div>
         </div>
-        </Link>
     )
 }
 

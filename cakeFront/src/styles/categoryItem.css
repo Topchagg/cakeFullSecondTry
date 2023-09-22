@@ -1,18 +1,24 @@
 .wrapper-category-item {
     border: solid black 1px;
-    height: 500px;
-    width: 440px;
-    margin-top: 60px
+    height: 440px;
+    width: 360px;
+    margin-top: 60px;
 }
 
 .img-wrapper {
-    border: solid black 1px;
-    height: 450px;
+    border: solid black 2px;
+    height: 100%;
 }
 
 .title-wrapper {
     height: 50px;
-    border: solid red 1px;
-    font-size: 24px;
+    font-size: 32px;
+    border: solid red 3px;
     text-align: center;
+
+}
+
+.title {
+    margin-top: 10px;
+
 }

@@ -1,9 +1,9 @@
-import ItemsWrapper from "../sections/catalogItemWrapper"
+import CategoriesWrapper from "../sections/catalogCategoryWrapper"
 
 function Catalog () {
     return (
         <>
-          <ItemsWrapper/>  
+          <CategoriesWrapper/>  
         </>
     )
 }
