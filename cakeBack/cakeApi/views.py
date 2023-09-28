@@ -49,7 +49,6 @@ def getBestsellers(request):
 @api_view(['GET',])
 def getItems(request):
     if request.method == "GET":
-
         allItems = Item.objects.all()
 
         biggestNumber = findBiggestNumber(allItems)
@@ -57,16 +56,24 @@ def getItems(request):
         filterBestsellers = request.GET.get('bestsellerFilter')
         maxPrice = request.GET.get('maxPrice')
         minPrice = request.GET.get('minPrice')
+        lowHighFilter = request.GET.get('lowHighFilter')
 
         filters = Q()
         if filterBestsellers == 'true':
-            filters |= Q(BestsellerItem = True)
+            filters |= Q(BestsellerItem=True)
         if minPrice:
             filters &= Q(priceOfItem__gte=minPrice)
         if maxPrice:
             filters &= Q(priceOfItem__lte=maxPrice)
 
         neededItems = allItems.filter(filters)
+        
+        if lowHighFilter == 'lowToHigh':
+            neededItems = neededItems.filter().order_by('priceOfItem')
+        elif lowHighFilter == 'highToLow':
+            neededItems =  neededItems.filter().order_by('-priceOfItem')
+
+
         paginator = catalogPaginator()
         paginatedData = paginator.paginate_queryset(neededItems, request)
         serializedItems = SerializeItems(paginatedData, many=True)

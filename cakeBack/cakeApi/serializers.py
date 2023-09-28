@@ -14,6 +14,6 @@ class SerializeCategories(ModelSerializer):
 class SerializeItems(ModelSerializer):
 
     class Meta:
-        model = Item    
+        model = Item        
         fields = ['nameOfItem', 'priceOfItem', 'imgOfItem','descriptionOfItem', 'slug', 'BestsellerItem']
         read_only_fields = ['slug',]

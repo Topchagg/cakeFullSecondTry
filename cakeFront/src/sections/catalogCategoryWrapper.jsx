@@ -1,31 +1,30 @@
 import { useEffect, useState } from 'react'
 
 
-import {categoryItemFetch} from '../store'
+import {categoryItemFetch, tools} from '../store'
 import '../styles/catalogCategoryWrapper.css'
 import CategoryItem from "../components/categoryItem"
 
 function CategoriesWrapper () {
 
-    const fetchCategoryItems = categoryItemFetch(state => (state.fetchCategoryItems))
+    const [page, setPage] = useState(1)
+
+    const incrementPage = tools(state => (state.incrementPage))
+    const decrimentPage = tools (state => (state.decrimentPage))
+    const fixWrongPage = tools(state => (state.fixWrongPage))
+
     const categoryItems = categoryItemFetch(state => (state.categoryItems))
     const loading = categoryItemFetch(state => (state.loading))
-    const page = categoryItemFetch(state => (state.page))
-    const increment = categoryItemFetch(state => (state.incrementPage))
-    const decriment = categoryItemFetch(state => (state.decrimentPage))
-
-    function incrementPage() {
-        increment()
-    }
-
-    function decrimentPage() {
-        decriment()
-    }
+    const status = categoryItemFetch(state => (state.status))
+    const fetchCategoryItems = categoryItemFetch((state) => state.fetchCategoryItems)
 
     useEffect(() => {
-        fetchCategoryItems('false')
-        console.log(page)
-    },[page])
+        fetchCategoryItems(page)
+     },[page])
+
+     useEffect(() => {
+        fixWrongPage(page, setPage)
+     },[status])
 
     return (
         <>
@@ -33,15 +32,15 @@ function CategoriesWrapper () {
             <div className="categories-wrapper">
                 
                 {loading || categoryItems.map((categoryItem) => (
-                    <CategoryItem title={categoryItem.nameOfCategory}  />
+                    <CategoryItem title={categoryItem.nameOfCategory} slug={categoryItem.slug}  />
                 ))}
             </div>
             <div className="carousel-btn-wrapper">
             <div className="carousel-wrapper">
-                     <button type='button' onClick={decrimentPage} className="decriment-btn carousel-btn">
+                     <button type='button' onClick={() => decrimentPage(page, setPage)} className="decriment-btn carousel-btn">
                          &laquo;	
                      </button>
-                     <button type='button' onClick={incrementPage} className="increment-btn carousel-btn">
+                     <button type='button' onClick={() => incrementPage(page, setPage)}  className="increment-btn carousel-btn">
                          &raquo;
                      </button>
                  </div> 

@@ -6,7 +6,7 @@ import '../styles/categoryItem.css'
 function CategoryItem(props) {
     return (
         <div className="wrapper-category-item">
-            <Link to={"catalog/" + props.slug}>
+            <Link to={props.slug}>
             <div className="img-wrapper">
                 <img src={props.img}alt="" />
             </div>
