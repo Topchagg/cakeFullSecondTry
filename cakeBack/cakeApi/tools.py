@@ -1,4 +1,3 @@
-
 def findBiggestNumber(querySet):
     a = 0
     for i in querySet:
