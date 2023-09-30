@@ -22,7 +22,7 @@ function App() {
           <Route path='Contact' element={<Contact/>}></Route>
 
 
-          <Route path="Catalog/:slug" element={<ItemsWrapper/>}></Route>
+          <Route path="Catalog/:category" element={<ItemsWrapper/>}></Route>
         </Route>
     </Routes>
     </>

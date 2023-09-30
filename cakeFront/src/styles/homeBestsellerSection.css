@@ -22,10 +22,8 @@
 }
 
 .carousel-wrapper {
-    margin: 0 auto;
     height: 40px;
     width: 100px;
-    margin-top: 35px;
     display: flex;
 }
 
@@ -43,6 +41,5 @@
 }
 
 .button-wrapper {
-    margin-top: -10px;
-    margin-left: -53.5px;
+    margin-left: -53px;
 }

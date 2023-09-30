@@ -9,7 +9,7 @@ from .models import *
 from .serializers import *
 
 
-from .tools import findBiggestNumber
+from .tools import *
 
 
 
@@ -49,24 +49,39 @@ def getBestsellers(request):
 @api_view(['GET',])
 def getItems(request):
     if request.method == "GET":
-
-        allItems = Item.objects.all()
-
+        slugOfNeededCategory = request.GET.get('category')
+        pkOfNeededCategory =  findPkOfNeededCategory(Category.objects.filter(nameOfCategory__iexact = slugOfNeededCategory))
+        
+        allItems = Item.objects.filter(categoryOfItem_id = pkOfNeededCategory)
+        print(allItems)
+        print('=============start==========')
         biggestNumber = findBiggestNumber(allItems)
 
         filterBestsellers = request.GET.get('bestsellerFilter')
         maxPrice = request.GET.get('maxPrice')
         minPrice = request.GET.get('minPrice')
+        lowHighFilter = request.GET.get('lowHighFilter')
 
         filters = Q()
         if filterBestsellers == 'true':
-            filters |= Q(BestsellerItem = True)
+            filters |= Q(BestsellerItem=True)
         if minPrice:
             filters &= Q(priceOfItem__gte=minPrice)
         if maxPrice:
             filters &= Q(priceOfItem__lte=maxPrice)
 
         neededItems = allItems.filter(filters)
+        print(neededItems)
+        print('===========filters===========')
+        
+        if lowHighFilter == 'lowToHigh':
+            neededItems = neededItems.filter().order_by('priceOfItem')
+        elif lowHighFilter == 'highToLow':
+            neededItems =  neededItems.filter().order_by('-priceOfItem')
+
+        print(allItems)
+        print('===========second-filters===========')
+
         paginator = catalogPaginator()
         paginatedData = paginator.paginate_queryset(neededItems, request)
         serializedItems = SerializeItems(paginatedData, many=True)
