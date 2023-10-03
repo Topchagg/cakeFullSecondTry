@@ -53,8 +53,7 @@ def getItems(request):
         pkOfNeededCategory =  findPkOfNeededCategory(Category.objects.filter(nameOfCategory__iexact = slugOfNeededCategory))
         
         allItems = Item.objects.filter(categoryOfItem_id = pkOfNeededCategory)
-        print(allItems)
-        print('=============start==========')
+
         biggestNumber = findBiggestNumber(allItems)
 
         filterBestsellers = request.GET.get('bestsellerFilter')
@@ -71,16 +70,13 @@ def getItems(request):
             filters &= Q(priceOfItem__lte=maxPrice)
 
         neededItems = allItems.filter(filters)
-        print(neededItems)
-        print('===========filters===========')
-        
+
         if lowHighFilter == 'lowToHigh':
             neededItems = neededItems.filter().order_by('priceOfItem')
         elif lowHighFilter == 'highToLow':
             neededItems =  neededItems.filter().order_by('-priceOfItem')
 
-        print(allItems)
-        print('===========second-filters===========')
+    
 
         paginator = catalogPaginator()
         paginatedData = paginator.paginate_queryset(neededItems, request)
@@ -88,8 +84,14 @@ def getItems(request):
         data = serializedItems.data
         return Response([data, biggestNumber], status=status.HTTP_200_OK)
     
+@api_view(['GET',])
+def getOrders(request):
+    if request.method == "GET":
+        neededOredrs = Order.objects.all()
+        serializedNeededItems = SerializeOrders(neededOredrs, many=True)
+        neededData = serializedNeededItems.data
+        return Response([neededData])
 
-        
 
 
 

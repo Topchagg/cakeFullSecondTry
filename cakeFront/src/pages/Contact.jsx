@@ -1,8 +1,8 @@
 
-function Contact() {
+function ContactPage() {
     return (
-        <h1>Contact</h1>
+        <h1>ContactPage</h1>
     )
 }
 
-export default Contact
+export default ContactPage

@@ -1,7 +1,6 @@
 def findBiggestNumber(querySet):
     a = 0
     for i in querySet:
-        print(i.priceOfItem)
         if i.priceOfItem > a:
             a = i.priceOfItem
     return a

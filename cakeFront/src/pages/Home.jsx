@@ -10,7 +10,7 @@ import HomeBestsellerSection from "../sections/homeBestsellerSection"
 import HomeIndividualOrderSection from '../sections/homeIndividualOrderSection'
 
 
-function Home () {
+function HomePage () {
     return (
         <>
             <HomeOpenSection/>
@@ -24,4 +24,4 @@ function Home () {
     )
 }
 
-export default Home
+export default HomePage

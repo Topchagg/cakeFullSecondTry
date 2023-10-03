@@ -71,6 +71,25 @@ export const productItemFetch = create((set) => ({
     
 }))
 
+
+export const fetchOrders = create((set) => ({
+
+    items: [],
+    orders: [],
+    user: [],
+    workStatus: ' ',
+
+    fetchNeededOrders: () => set(async(state) => {
+        const result = await fetch('http://127.0.0.1:8000/getOrders/')
+        const json = await result.json()
+        set((state) => ({items: json[0][0]['items']}))
+        set((state) => ({user: json[0][0]['user']}))
+        set((state) => ({workStatus: json[0][0]['status']}))
+        set((state) => ({orders: json[0]}))
+    })
+
+}))
+
 export const tools = create((set) =>({
 
     incrementPage: (page, setPageFunc) => {

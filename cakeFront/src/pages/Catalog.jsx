@@ -1,6 +1,6 @@
 import CategoriesWrapper from "../sections/catalogCategoryWrapper"
 
-function Catalog () {
+function CatalogPage () {
     return (
         <>
           <CategoriesWrapper/>  
@@ -8,4 +8,4 @@ function Catalog () {
     )
 }
 
-export default Catalog
+export default CatalogPage
