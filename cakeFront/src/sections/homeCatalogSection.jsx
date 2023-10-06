@@ -22,7 +22,7 @@ function HomeCatalogSection () {
             <div className="large-text">Catalog</div>
             <div className="catalog-items-wrapper">
                 { categoryItems.map((categoryItem) => (
-                    <CategoryItem slug={categoryItem.slug} title={categoryItem.nameOfCategory}/> 
+                    <CategoryItem slug={categoryItem.slug} title={categoryItem.nameOfCategory} link={"Catalog/" + categoryItem.slug}/> 
                 ))}
             </div>
         </div>

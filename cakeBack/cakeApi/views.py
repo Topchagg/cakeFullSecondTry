@@ -9,7 +9,7 @@ from .models import *
 from .serializers import *
 
 
-from .tools import findBiggestNumber
+from .tools import *
 
 
 
@@ -49,7 +49,12 @@ def getBestsellers(request):
 @api_view(['GET',])
 def getItems(request):
     if request.method == "GET":
-        allItems = Item.objects.all()
+
+        slugOfNeededCategory =  request.GET.get('slugOfNeededCategory')
+        print(slugOfNeededCategory)
+        
+
+        allItems = Item.objects.filter(categoryOfItem = 1)
 
         biggestNumber = findBiggestNumber(allItems)
 

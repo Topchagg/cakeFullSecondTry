@@ -32,7 +32,7 @@ function CategoriesWrapper () {
             <div className="categories-wrapper">
                 
                 {loading || categoryItems.map((categoryItem) => (
-                    <CategoryItem title={categoryItem.nameOfCategory} slug={categoryItem.slug}  />
+                    <CategoryItem title={categoryItem.nameOfCategory} slug={categoryItem.slug} link={categoryItem.slug}  />
                 ))}
             </div>
             <div className="carousel-btn-wrapper">
@@ -45,7 +45,6 @@ function CategoriesWrapper () {
                      </button>
                  </div> 
              </div>
-
         </>
     )
 }

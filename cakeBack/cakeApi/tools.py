@@ -5,3 +5,4 @@ def findBiggestNumber(querySet):
         if i.priceOfItem > a:
             a = i.priceOfItem
     return a
+

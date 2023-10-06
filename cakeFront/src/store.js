@@ -48,14 +48,14 @@ export const productItemFetch = create((set) => ({
     biggestPrice: 0,
     
 
-   findBiggestPrice: () => set(async(state) => {
-    const result = await fetch('http://127.0.0.1:8000/getItems/')
+   findBiggestPrice: (slugOfNeededCategory) => set(async(state) => {
+    const result = await fetch('http://127.0.0.1:8000/getItems/?slugOfNeededCategory' + slugOfNeededCategory )
     const json = await result.json()
     set((state) => ({biggestPrice: json[1]}))
    }),
 
-   fetchNeededItems: (bestsellerFilter, minPrice, maxPrice, page, lowHighFilter) => set(async(state) => {
-    const result = await fetch('http://127.0.0.1:8000/getItems/?page=' + page + '&&bestsellerFilter=' + bestsellerFilter + '&&maxPrice=' + maxPrice + '&&minPrice=' + minPrice + '&&lowHighFilter=' + lowHighFilter )
+   fetchNeededItems: (bestsellerFilter, minPrice, maxPrice, page, lowHighFilter, slugOfNeededCategory) => set(async(state) => {
+    const result = await fetch('http://127.0.0.1:8000/getItems/?page=' + page + '&&bestsellerFilter=' + bestsellerFilter + '&&maxPrice=' + maxPrice + '&&minPrice=' + minPrice + '&&lowHighFilter=' + lowHighFilter + '&&slugOfNeededCategory=' + slugOfNeededCategory )
     if(result.status === 404){
        set((state) => ({status: !state.status}))  
     }
@@ -73,6 +73,8 @@ export const productItemFetch = create((set) => ({
 
 export const tools = create((set) =>({
 
+    slugOfCategory: '',
+
     incrementPage: (page, setPageFunc) => {
         setPageFunc(page + 1)
     }   ,
@@ -89,6 +91,10 @@ export const tools = create((set) =>({
         else {
             setPageFunc(1)
         }
+    }),
+
+    setSlugOfCategory: (slug) => set(async(state) => {
+        set((state) => ({slugOfCategory:slug}))
     })
     
     

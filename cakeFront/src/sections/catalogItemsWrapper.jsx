@@ -7,7 +7,8 @@ import ProductItem from '../components/productItemShowcase'
 
 
 function itemsWrapper () {
-
+    
+    const slugOfCategory = tools((state) => state.slugOfCategory)
     const incrementPage = tools((state) => state.incrementPage)
     const decrimentPage = tools((state) => state.decrimentPage)
     const fixWrongPage = tools((state) => state.fixWrongPage)
@@ -34,7 +35,7 @@ function itemsWrapper () {
     }
 
     useEffect( () => {
-        findBiggestPrice()
+        findBiggestPrice(slugOfCategory)
     }, [])
 
     useEffect(()=> {
@@ -45,15 +46,14 @@ function itemsWrapper () {
       
         const timer = setTimeout(() => {
             
-            fetchNeededItems(bestsellerFilter, minPrice, maxPrice, page, lowHighFilter);
+            fetchNeededItems(bestsellerFilter, minPrice, maxPrice, page, lowHighFilter, slugOfCategory);
         }, 200);
 
         return () => clearTimeout(timer);
     }, [minPrice, maxPrice, bestsellerFilter,lowHighFilter]);
 
     useEffect(() => {
-        console.log(lowHighFilter)
-        fetchNeededItems(bestsellerFilter, minPrice, maxPrice, page, lowHighFilter )
+        fetchNeededItems(bestsellerFilter, minPrice, maxPrice, page, lowHighFilter, slugOfCategory )
     }, [page])
 
     useEffect(() => {
