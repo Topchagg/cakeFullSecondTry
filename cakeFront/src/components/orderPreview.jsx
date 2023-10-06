@@ -5,7 +5,7 @@ import '../styles/OrderPreview.css'
 function OrderPreview(props) {
     return (
         <>
-            <Link to={'/'}>
+            <Link to={'' + props.id}>
                 <div className="orderPreview-wrapper">
                     <div className="user-data-wrapper">
                         <div className="user-phone-number info-item">

@@ -87,11 +87,26 @@ def getItems(request):
 @api_view(['GET',])
 def getOrders(request):
     if request.method == "GET":
-        neededOredrs = Order.objects.all()
-        serializedNeededItems = SerializeOrders(neededOredrs, many=True)
-        neededData = serializedNeededItems.data
-        return Response([neededData])
+        id = request.GET.get('id')
 
+        if type(id) == str:
+            neededOrders = Order.objects.filter(pk=id)
+        else:
+            neededOrders = Order.objects.all()
+        
+        serializedNeededItems = SerializeOrders(neededOrders, many=True)
+        neededData = serializedNeededItems.data
+        totalPrice, amountOfItems = findGeneralPriceOfOrder(neededData[0]['items'])
+        return Response([neededData, totalPrice, amountOfItems])
+    
+@api_view(['POST'])
+def postOrder(request):
+    if request.method == "POST":
+        serializer = SerializeOrders(data=request.data)
+        if serializer.is_valid():
+            serializer.save()  
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 

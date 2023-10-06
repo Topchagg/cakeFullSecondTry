@@ -1,0 +1,17 @@
+.item-order-list-wrapper {
+
+
+    display: flex;
+  
+}
+
+.order-img-wrapper {
+    width: 100px;
+    height: 100%;
+    border: solid black 1px;
+}
+
+.amount-price-wrapper {
+    margin-left: 2px;
+    flex-direction: column;
+}

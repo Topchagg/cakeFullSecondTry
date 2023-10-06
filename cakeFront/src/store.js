@@ -77,17 +77,115 @@ export const fetchOrders = create((set) => ({
     items: [],
     orders: [],
     user: [],
+    totalPrice: 0,
+    amountOfItems: 0,
     workStatus: ' ',
 
-    fetchNeededOrders: () => set(async(state) => {
-        const result = await fetch('http://127.0.0.1:8000/getOrders/')
-        const json = await result.json()
-        set((state) => ({items: json[0][0]['items']}))
-        set((state) => ({user: json[0][0]['user']}))
-        set((state) => ({workStatus: json[0][0]['status']}))
-        set((state) => ({orders: json[0]}))
-    })
+    fetchNeededOrders: async (id, many) => {
+        try {
+            let url = 'http://127.0.0.1:8000/getOrders/';
+            if (!many) {
+                url = `http://127.0.0.1:8000/getOrders/?id=` + id;
+            }
+    
+            const result = await fetch(url);
+            const json = await result.json();
+    
+            set((state) => ({
+                items: json[0][0]['items'],
+                user: json[0][0]['user'],
+                workStatus: json[0][0]['status'],
+                orders: json[0],
+                totalPrice: json[1],
+                amountOfItems: json[2],
+            }));
+            console.log(json)
+        } catch (error) {
+            console.error('Error fetching orders:', error);
+        }
+    },
+    createNewOrder: (items, name, phoneNumber, email, userPk) =>  set(async state  => {
+        const formData = {
+           user: {
+            pk: userPk,
+            userEmail: email,
+            userName: name,
+            userPhoneNumber: phoneNumber
+           },
+           items,
+        status: "Workin` at order"
+        }
+  
+          const response = await fetch('http://127.0.0.1:8000/postNewOrder', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+              },
+          body: JSON.stringify(formData)  
+        });
+  
+        if (response.status === 201) {
+            console.log('Category created successfully');
+        } else {
+            console.log('Error creating category');
+        }
+      }),
+      
 
+}))
+
+
+export const cart = create((set) => ({
+    items: [],
+    showCart: false,
+    Amount: 0,
+    totalPrice: 0,
+
+    setShowCart: () => set((state) => ({showCart: !state.showCart})),
+
+    addItemIntoCart: (item) => set(async(state) => {
+        const foundSame = false
+        if(state.items.length === 0){
+            item.Amount = 1
+            let newItemsArray;
+            state.items.push(item)
+            newItemsArray = state.items
+            set((state) => ({items: newItemsArray}))
+            state.incrementAmount()
+            state.updateTotalPrice(item.priceOfItem)
+            console.log(state.items)
+        }
+        else{
+            state.foundSame = false
+            const newItemsArray = state.items
+            for (let i = 0; i != state.items.length; i++){
+                if(state.items[i]['nameOfItem'] === item['nameOfItem']){
+                    state.foundSame = true
+                    console.log(newItemsArray[i]['Amount'])
+                    newItemsArray[i]['Amount'] += 1
+                    set((state) => ({items: newItemsArray}))
+                    console.log(state.items)
+                    state.incrementAmount()
+                    state.updateTotalPrice(item.priceOfItem)
+                }
+            }
+        if(state.foundSame === false){
+            item.Amount = 1
+            let newItemsArray;
+            state.items.push(item)
+            newItemsArray = state.items
+            set((state) => ({items: newItemsArray}))
+            state.incrementAmount()
+            state.updateTotalPrice(item.priceOfItem)
+            }}
+
+}),
+incrementAmount: () =>  set((state) => ({Amount: state.Amount + 1})),
+updateTotalPrice: (itemPrice) => set((state) => ({totalPrice: state.totalPrice + itemPrice })) 
+   
+      
+       
+    
 }))
 
 export const tools = create((set) =>({
@@ -108,7 +206,8 @@ export const tools = create((set) =>({
         else {
             setPageFunc(1)
         }
-    })
+    }),
+   
     
     
 

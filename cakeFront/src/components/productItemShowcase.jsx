@@ -1,19 +1,26 @@
-import { useState } from 'react'
-import {Link} from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
-import '../styles/ProductItemShowcase.css'
 
 import BestsellerLine from './bestsellerLine'
+import AddButton from "./addButton"
+
+import { cart } from '../store'
+
+import '../styles/ProductItemShowcase.css'
 
 function ProductItem (props) {
 
     const [infoBestseller, setInfoBestseller] = useState(false)
 
+    const addItemIntoCart = cart((state) => state.addItemIntoCart)
+    const items = cart((state) => state.items)
 
     function handleOnMouseUp() {
         setInfoBestseller(!infoBestseller)
     }
    
+
+    
 
     function handleOnMouseDown() {
         setInfoBestseller(!infoBestseller)
@@ -33,10 +40,10 @@ function ProductItem (props) {
                 </div>
                 <div className="add-button-n-price-wrapper">
                     <div className="price-of-item">
-                        {props.price} $
+                        {props.price} $ 
                     </div>
                     <div className="add-btn">
-                        <button className='add-button' type='button'><img className='add-button-pic' src="Vector(2).png" alt="" /></button>
+                       <AddButton fullItem={props.fullItem} />
                     </div>
                 </div>
             </div>

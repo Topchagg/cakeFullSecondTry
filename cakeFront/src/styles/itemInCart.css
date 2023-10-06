@@ -1,0 +1,10 @@
+.item-wrapper {
+    margin-top: 50px;
+    display: flex;
+}
+
+.item-img-wrapper-cart {
+    width: 100px;
+    height: 100px;
+    border: solid 1px;
+}

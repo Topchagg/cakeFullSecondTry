@@ -1,10 +1,21 @@
 import {Link} from 'react-router-dom'
+import { useState } from 'react'
+
+
+
+import Cart from '../pages/cart'
+
+import { cart } from '../store'
+
 
 import '../styles/layoutHeaderSection.css'
-import About from '../pages/About'
-
 
 function Header () {
+
+    const setShowCart = cart((state) => state.setShowCart)
+    const Amount = cart((state) => state.Amount)
+
+
     return (
 
         <header className="header">
@@ -18,8 +29,11 @@ function Header () {
                 <Link to='Contact'><div className="nav-menu__item">Contact us</div></Link>
             </div>
             <div className="icons-wrapper">
-                <Link><img className='header__icon' src="carbon_search.svg" alt="" /></Link>
-                <Link><img className='header__icon' src="heroicons_shopping-bag.svg" alt="" /></Link>
+                <img className='header__icon' src="carbon_search.svg" alt="" />
+                <img className='header__icon' src="heroicons_shopping-bag.svg" alt="" onClick={() => (setShowCart())}/>
+                <div className="header__icon amount">
+                    <div className="amount-num">{Amount}</div>
+                </div>
             </div>
         </header>
 

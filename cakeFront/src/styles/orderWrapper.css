@@ -1,0 +1,45 @@
+.wrapper-of-order {
+    width: 90%;
+    height: 700px;
+    margin: 130px auto;
+    border: solid black 1px;
+    display: flex;
+}
+
+.user-data-wrapper {
+    width: 370px;
+    height: 100px;
+    border: solid black 1px;
+}
+
+.info-about-order {
+    border: solid red 1px;
+    height: 100%;
+    flex-direction: column;
+}
+
+.order-wrapper {
+    width: 82%;
+    height: 100%;
+    border: solid black 1px;
+}
+
+.small-wrapper {
+    margin-top: 1px;
+    border: solid black 1px;
+}
+
+.items-wrapper-info {
+    display: grid;
+    grid-template-columns: repeat(3, 380px);
+    grid-auto-rows: 100px;
+    row-gap: 20px;
+}
+
+.general-information-wrapper {
+    width: 100%;
+    height: 100px;
+    border: solid black 1px;
+    text-align: center;
+    margin-top: 20px;
+}

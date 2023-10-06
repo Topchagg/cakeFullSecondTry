@@ -37,7 +37,7 @@ function HomeBestsellerSection () {
             <div className="large-text">BESTSELLERS</div> 
             <div className="bestsellers-items-wrapper">
             {bestsellers.map((item) => (
-                <ProductItem bestseller={item.BestsellerItem} img={item.imgOfItem} price={item.priceOfItem} name={item.nameOfItem}/>
+                <ProductItem bestseller={item.BestsellerItem} img={item.imgOfItem} price={item.priceOfItem} name={item.nameOfItem} fullItem={item} />
                       
         ))}
             </div>

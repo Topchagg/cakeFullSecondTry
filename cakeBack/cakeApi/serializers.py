@@ -32,3 +32,4 @@ class SerializeOrders(ModelSerializer):
     class Meta:
         model = Order
         fields = ['user', 'items', 'status','pk']
+        read_only_fields = ['pk']

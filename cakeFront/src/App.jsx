@@ -7,8 +7,11 @@ import DeliveryPage from './pages/Delivery'
 import ContactPage from './pages/Contact'
 import ItemsWrapper from './sections/catalogItemsWrapper'
 
-import OrderPage from './pages/Orders'
+import OrderPage from './pages/Order'
+import OrderWrapper from './components/orderWrapper'
+
 import Layout from './pages/layout'
+
 
 function App() {
 
@@ -27,6 +30,8 @@ function App() {
           <Route path="Catalog/:category" element={<ItemsWrapper/>}></Route>
 
           <Route path="Orders" element={<OrderPage/>} ></Route>
+          <Route path="Orders/:id"  element={<OrderWrapper/>}></Route>
+
         </Route>
     </Routes>
     </>

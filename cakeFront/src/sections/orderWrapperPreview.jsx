@@ -5,30 +5,27 @@ import OrderPreview from "../components/orderPreview"
 import { fetchOrders } from "../store"
 
 
-function OrderPage () {
+
+function OrderWrapperPreview() {
 
     const fetchNeededOrders = fetchOrders((state) => state.fetchNeededOrders)
     const orders = fetchOrders((state) => state.orders)
     const user = fetchOrders((state) => state.user)
 
-    function something () {
-        console.log(user)
-    }
+
 
     useEffect(() => {
-        fetchNeededOrders()
+        fetchNeededOrders(undefined, true)
     }, [])
 
     return (
-        <>
-            <button value="button" onClick={() => something()}> Something </button>
+       <>
             <h1 className="tittle">Orders</h1>
             {orders.map((order) => (
                <OrderPreview id={order['pk']} userPhoneNumber={user['userPhoneNumber']} userName={user['userName']} userEmail={user['userEmail']}  />
             ))}
-        </>
+       </>
     )
-
 }
 
-export default OrderPage
+export default OrderWrapperPreview

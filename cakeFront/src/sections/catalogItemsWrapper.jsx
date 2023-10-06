@@ -78,7 +78,7 @@ function itemsWrapper () {
            {loaded && 
             <div className="items-wrapper">
             {neededItems.map((item) => (
-                <ProductItem img={item.imgOfItem} bestseller={item.BestsellerItem} price={item.priceOfItem} name={item.nameOfItem} slug={item.slug} />
+                <ProductItem img={item.imgOfItem} bestseller={item.BestsellerItem} price={item.priceOfItem} name={item.nameOfItem} slug={item.slug} fullItem={item} />
             ))}
         </div>}
         {loaded &&

@@ -1,6 +1,7 @@
 from django.db import models
 from autoslug import AutoSlugField
 
+
 class Category(models.Model):
     
     nameOfCategory = models.CharField(max_length=100)
@@ -27,4 +28,5 @@ class User(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     items = models.JSONField()
-    status = models.CharField(max_length=50)
+    status = models.CharField(max_length=50, default='Workin` at order')
+    dataTime = models.DateTimeField(null=True)
