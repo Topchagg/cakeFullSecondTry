@@ -50,11 +50,9 @@ def getBestsellers(request):
 def getItems(request):
     if request.method == "GET":
 
-        slugOfNeededCategory =  request.GET.get('slugOfNeededCategory')
-        print(slugOfNeededCategory)
-        
+    
 
-        allItems = Item.objects.filter(categoryOfItem = 1)
+        allItems = Item.objects.all()
 
         biggestNumber = findBiggestNumber(allItems)
 

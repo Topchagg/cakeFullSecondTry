@@ -8,7 +8,7 @@ import ProductItem from '../components/productItemShowcase'
 
 function itemsWrapper () {
     
-    const slugOfCategory = tools((state) => state.slugOfCategory)
+
     const incrementPage = tools((state) => state.incrementPage)
     const decrimentPage = tools((state) => state.decrimentPage)
     const fixWrongPage = tools((state) => state.fixWrongPage)
