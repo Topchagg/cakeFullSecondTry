@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 
 import BestsellerLine from './bestsellerLine'
@@ -13,7 +13,6 @@ function ProductItem (props) {
     const [infoBestseller, setInfoBestseller] = useState(false)
 
     const addItemIntoCart = cart((state) => state.addItemIntoCart)
-    const items = cart((state) => state.items)
 
     function handleOnMouseUp() {
         setInfoBestseller(!infoBestseller)
@@ -43,7 +42,7 @@ function ProductItem (props) {
                         {props.price} $ 
                     </div>
                     <div className="add-btn">
-                       <AddButton fullItem={props.fullItem} />
+                       <AddButton fullItem={props.fullItem} func={addItemIntoCart} />
                     </div>
                 </div>
             </div>

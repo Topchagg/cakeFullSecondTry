@@ -17,7 +17,6 @@ function OrderWrapper(props) {
     const items = fetchOrders((state) => state.items)
     const user = fetchOrders((state) => state.user)
     const workStatus = fetchOrders((state) => state.workStatus)
-    const orders = fetchOrders((state) => state.orders)
     const totalPrice = fetchOrders((state) => state.totalPrice)
     const amountOfItems = fetchOrders((state) => state.amountOfItems)
 
@@ -34,6 +33,7 @@ function OrderWrapper(props) {
                         <h1>User data</h1>
                     </div>
                     <div className="data-wrapper">
+                        <p>User id:  <strong>{user['pk']}</strong></p>
                         <p>Phone number: <strong>{user['userPhoneNumber']}</strong></p>
                         <p>Name: <strong>{user['userName']}</strong></p>
                         <p>Email: <strong>{user['userEmail']}</strong></p>
@@ -53,7 +53,7 @@ function OrderWrapper(props) {
                 </div>
                 <div className="items-wrapper-info">
                     {items.map((item) => (
-                        <ItemInOrderList nameOfItem={item['nameOfItem']} amount={item['Amount']} priceOfItem={item['priceOfObject']} />
+                        <ItemInOrderList nameOfItem={item['nameOfItem']} amount={item['Amount']} priceOfItem={item['priceOfItem']} />
                     ))}
                 </div>
             </div>

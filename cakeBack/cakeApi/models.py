@@ -26,7 +26,7 @@ class User(models.Model):
     userName = models.CharField(max_length=40)
 
 class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.IntegerField(blank=True , null=True)
     items = models.JSONField()
     status = models.CharField(max_length=50, default='Workin` at order')
     dataTime = models.DateTimeField(null=True)

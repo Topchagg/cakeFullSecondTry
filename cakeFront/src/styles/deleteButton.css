@@ -1,0 +1,17 @@
+.deleteButton {
+    width: 70px;
+    height: 30px;
+    border: solid black 2px;
+    background-color: red;
+    color: aliceblue;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 400ms;
+}
+
+.deleteButton:active {
+    width: 60px;
+    height: 25px;
+    background-color: white;
+    color: black;
+}

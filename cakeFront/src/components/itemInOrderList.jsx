@@ -11,7 +11,8 @@ function ItemInOrderList(props) {
                 <p>Name: <strong>{props.nameOfItem}</strong> </p>
                 Amount: <strong>{props.amount}</strong>
                 <div className="">
-                Price for per: <strong>{props.priceOfItem}$</strong>
+                <p>Price for per: <strong>{props.priceOfItem}$</strong></p>
+                total price  <strong>{props.amount * props.priceOfItem}$</strong>
                 </div>
             </div>
         </div>

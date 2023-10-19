@@ -13,8 +13,9 @@ def findGeneralPriceOfOrder(itemsOfOrder):
     total = 0
     amount = 0
     for i in itemsOfOrder:
-        total += i['priceOfObject'] * i['Amount']
-        amount += 1
+        total += i['priceOfItem'] * i['Amount']
+        amount += i['Amount']
+
     return total, amount
 
         

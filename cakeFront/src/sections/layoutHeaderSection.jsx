@@ -1,19 +1,23 @@
 import {Link} from 'react-router-dom'
-import { useState } from 'react'
-
-
-
-import Cart from '../pages/cart'
+import { useEffect } from 'react'
 
 import { cart } from '../store'
-
 
 import '../styles/layoutHeaderSection.css'
 
 function Header () {
 
-    const setShowCart = cart((state) => state.setShowCart)
+    const toggleShowCart = cart((state) => state.toggleShowCart)
     const Amount = cart((state) => state.Amount)
+    const setLocalItemsData = cart((state) => state.setLocalItemsData)
+
+
+    
+    useEffect(() => {
+        const parsedLocalItems = JSON.parse(localStorage.getItem("bigItems"))
+        setLocalItemsData(parsedLocalItems)
+        
+    },[])
 
 
     return (
@@ -30,7 +34,7 @@ function Header () {
             </div>
             <div className="icons-wrapper">
                 <img className='header__icon' src="carbon_search.svg" alt="" />
-                <img className='header__icon' src="heroicons_shopping-bag.svg" alt="" onClick={() => (setShowCart())}/>
+                <img className='header__icon' src="heroicons_shopping-bag.svg" alt="" onClick={() => (toggleShowCart())}/>
                 <div className="header__icon amount">
                     <div className="amount-num">{Amount}</div>
                 </div>

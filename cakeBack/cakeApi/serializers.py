@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-
+from rest_framework import serializers
 
 from .models import *
 
@@ -19,17 +19,19 @@ class SerializeItems(ModelSerializer):
         read_only_fields = ['slug',]
 
 class SerializeUsers(ModelSerializer):
-
     class Meta:
         model = User
-        fields = [ 'pk', 'userEmail','userPhoneNumber','userName']
+        fields = ['pk', 'userEmail', 'userPhoneNumber', 'userName']
+        
 
 
 class SerializeOrders(ModelSerializer):
 
-    user = SerializeUsers()
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+   
 
     class Meta:
         model = Order
         fields = ['user', 'items', 'status','pk']
-        read_only_fields = ['pk']
+
+

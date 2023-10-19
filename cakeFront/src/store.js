@@ -84,35 +84,28 @@ export const fetchOrders = create((set) => ({
     fetchNeededOrders: async (id, many) => {
         try {
             let url = 'http://127.0.0.1:8000/getOrders/';
-            if (!many) {
+            if (many === false) {
                 url = `http://127.0.0.1:8000/getOrders/?id=` + id;
             }
-    
             const result = await fetch(url);
             const json = await result.json();
-    
+            console.log(json)
             set((state) => ({
                 items: json[0][0]['items'],
-                user: json[0][0]['user'],
                 workStatus: json[0][0]['status'],
                 orders: json[0],
                 totalPrice: json[1],
                 amountOfItems: json[2],
+                user: json[3],
             }));
-            console.log(json)
         } catch (error) {
             console.error('Error fetching orders:', error);
         }
     },
-    createNewOrder: (items, name, phoneNumber, email, userPk) =>  set(async state  => {
+    createNewOrder: (items, userPk) =>  set(async state  => {
         const formData = {
-           user: {
-            pk: userPk,
-            userEmail: email,
-            userName: name,
-            userPhoneNumber: phoneNumber
-           },
-           items,
+           user: userPk,
+           items: items,
         status: "Workin` at order"
         }
   
@@ -122,14 +115,15 @@ export const fetchOrders = create((set) => ({
               'Content-Type': 'application/json'
               },
           body: JSON.stringify(formData)  
-        });
-  
+        })
         if (response.status === 201) {
             console.log('Category created successfully');
         } else {
             console.log('Error creating category');
         }
       }),
+
+
       
 
 }))
@@ -140,8 +134,9 @@ export const cart = create((set) => ({
     showCart: false,
     Amount: 0,
     totalPrice: 0,
+    restrictions: false,
 
-    setShowCart: () => set((state) => ({showCart: !state.showCart})),
+    toggleShowCart: () => set((state) => ({showCart: !state.showCart})),
 
     addItemIntoCart: (item) => set(async(state) => {
         const foundSame = false
@@ -153,7 +148,6 @@ export const cart = create((set) => ({
             set((state) => ({items: newItemsArray}))
             state.incrementAmount()
             state.updateTotalPrice(item.priceOfItem)
-            console.log(state.items)
         }
         else{
             state.foundSame = false
@@ -161,38 +155,109 @@ export const cart = create((set) => ({
             for (let i = 0; i != state.items.length; i++){
                 if(state.items[i]['nameOfItem'] === item['nameOfItem']){
                     state.foundSame = true
-                    console.log(newItemsArray[i]['Amount'])
-                    newItemsArray[i]['Amount'] += 1
-                    set((state) => ({items: newItemsArray}))
-                    console.log(state.items)
-                    state.incrementAmount()
-                    state.updateTotalPrice(item.priceOfItem)
+                    if(newItemsArray[i].Amount < 49) {
+                        newItemsArray[i]['Amount'] += 1
+                        set((state) => ({items: newItemsArray}))
+                        state.incrementAmount()
+                        state.updateTotalPrice(item.priceOfItem)
+                        set((state) => ({restrictions: false}))
+                    }
+                    else {
+                        set((state) => ({restrictions: true}))
+                    }
+                        
+                    
+                    
                 }
             }
         if(state.foundSame === false){
             item.Amount = 1
             let newItemsArray;
-            state.items.push(item)
+            state.items.push(item)  
             newItemsArray = state.items
             set((state) => ({items: newItemsArray}))
             state.incrementAmount()
             state.updateTotalPrice(item.priceOfItem)
             }}
-
+            localStorage.setItem("bigItems", JSON.stringify(state.items))
 }),
+
 incrementAmount: () =>  set((state) => ({Amount: state.Amount + 1})),
-updateTotalPrice: (itemPrice) => set((state) => ({totalPrice: state.totalPrice + itemPrice })) 
-   
-      
-       
+
+changeAmountOfItem: (nameOfItem, newAmount, typeOfChange) => set(async(state) => {
+  const newItemsArray = state.items
+  for(let i=0; i !== state.items.length; i++){
+    if(nameOfItem === state.items[i].nameOfItem){
+        if(typeOfChange === "change"){
+            if(newAmount <= 50 && newAmount >= 1){
+                newItemsArray[i].Amount = newAmount
+                set((state) => ({
+                    items: newItemsArray,
+                    restrictions: false,
+                }))
+                localStorage.setItem("bigItems", JSON.stringify(state.items))
+            }
+            else {
+                set((state) => ({restrictions: true}))
+            }
+        }
+        else{
+            if(newItemsArray[i].Amount > 1 && newItemsArray[i].Amount < 50){
+                newItemsArray[i].Amount -= 1;
+                set((state) => ({
+                    items: newItemsArray,
+                    Amount: --state.Amount,
+                    restrictions: false
+                }))
+                localStorage.setItem("bigItems", JSON.stringify(newItemsArray))
+            }
+        }       
+    }
+  }
+}),
+
+
+updateTotalPrice: (itemPrice) => set((state) => ({totalPrice: state.totalPrice + itemPrice })),
+
+setLocalItemsData: (localItems) => {
+    set((state) => ({items: localItems}))
+    console.log(localItems)
+
     
+    let m = 0;
+    for(let i=0; i != localItems.length; i++){
+        m += localItems[i].Amount;
+    }
+    set((state) => ({Amount: m}))
+    
+   
+    let p = 0;
+    for(let i=0; i != localItems.length; i++){
+        p += localItems[i].priceOfItem * localItems[i].Amount;
+    }
+    set((state) => ({totalPrice: p}))
+    
+},
+
+deleteItemInCart: (nameOfItem) => set(async(state) => {
+    let newItemsArray = []
+    for(let i=0; i !== state.items.length; i++ ){
+        if(state.items[i].nameOfItem !== nameOfItem) {
+            newItemsArray.push(state.items[i])
+        }
+    }
+    localStorage.setItem("bigItems", JSON.stringify(newItemsArray))
+    set((state) => ({items: newItemsArray}))
+    state.setLocalItemsData(newItemsArray)
+})
+   
 }))
 
 export const tools = create((set) =>({
 
     incrementPage: (page, setPageFunc) => {
         setPageFunc(page + 1)
-    }   ,
+    } ,
     decrimentPage: (page, setPageFunc) => {
         setPageFunc(page - 1)
     },

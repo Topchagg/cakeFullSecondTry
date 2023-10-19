@@ -97,16 +97,22 @@ def getOrders(request):
         serializedNeededItems = SerializeOrders(neededOrders, many=True)
         neededData = serializedNeededItems.data
         totalPrice, amountOfItems = findGeneralPriceOfOrder(neededData[0]['items'])
-        return Response([neededData, totalPrice, amountOfItems])
+
+    
+        idOfNeededUser =  neededData[0]['user']
+        user = User.objects.get(pk=idOfNeededUser)
+        serializer = SerializeUsers(user)  
+        userData = serializer.data
+        return Response([neededData, totalPrice, amountOfItems, userData])
     
 @api_view(['POST'])
 def postOrder(request):
     if request.method == "POST":
-        serializer = SerializeOrders(data=request.data)
-        if serializer.is_valid():
-            serializer.save()  
+        serialized = SerializeOrders(data=request.data)
+        if serialized.is_valid():
+            serialized.create(request.data)  
             return Response(status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serialized.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 

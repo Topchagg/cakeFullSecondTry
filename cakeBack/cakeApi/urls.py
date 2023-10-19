@@ -7,6 +7,6 @@ urlpatterns = [
     path('getBestsellers/', getBestsellers),
     path('getItems/', getItems),
     path('getOrders/', getOrders),
-    path('postNewOrder', createOrder)
+    path('postNewOrder', postOrder)
     
 ]
