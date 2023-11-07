@@ -8,7 +8,7 @@
 
 .user-data-wrapper {
     width: 370px;
-    height: 120px;
+    height: 150px;
     border: solid black 1px;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .small-wrapper {
-    margin-top: 1px;
+    margin-top: 10px;
     border: solid black 1px;
 }
 

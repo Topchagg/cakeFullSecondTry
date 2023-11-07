@@ -1,14 +1,21 @@
+import {userAction} from '../store'
+
 import OrderWrapperPreview from "../sections/orderWrapperPreview"
+
+import '../styles/adminOrdersPage.css'
 
 
 function OrderPage () {
 
-   
+    const isAdmin = userAction((state) => state.isAdmin)
 
     return (
         <>
-            <OrderWrapperPreview/>
+            {isAdmin && <OrderWrapperPreview/>}
+            {isAdmin || <h1 className='raise-error'>U don`t have acsess</h1>}
         </>
+            
+        
     )
 
 }

@@ -5,7 +5,7 @@ function ItemInOrderList(props) {
     return (
         <div className="item-order-list-wrapper">
             <div className="order-img-wrapper">
-
+                <img className='order-img' src={props.img} alt="" />
             </div>
             <div className="amount-price-wrapper">
                 <p>Name: <strong>{props.nameOfItem}</strong> </p>

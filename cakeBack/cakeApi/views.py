@@ -1,9 +1,12 @@
 from django.shortcuts import render
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.db.models import Q
+from django.http import QueryDict
+
 
 from .models import *
 from .serializers import *
@@ -43,7 +46,7 @@ def getBestsellers(request):
     paginator = catalogPaginator()
     serializedItems = SerializeItems(paginatedData, many=True) 
     dataOfNeededItems = serializedItems.data
-    return Response(dataOfNeededItems)
+    return Response(dataOfNeededItems, status=status.HTTP_200_OK)
 
 
 @api_view(['GET',])
@@ -88,37 +91,139 @@ def getItems(request):
 def getOrders(request):
     if request.method == "GET":
         id = request.GET.get('id')
-
         if type(id) == str:
             neededOrders = Order.objects.filter(pk=id)
+        elif request.user.is_staff == False:
+            neededOrders = Order.objects.filter(user = request.user.pk)
         else:
             neededOrders = Order.objects.all()
-        
+   
         serializedNeededItems = SerializeOrders(neededOrders, many=True)
         neededData = serializedNeededItems.data
         totalPrice, amountOfItems = findGeneralPriceOfOrder(neededData[0]['items'])
 
-    
-        idOfNeededUser =  neededData[0]['user']
+        
+        idOfNeededUser = neededData[0]['user']
         user = User.objects.get(pk=idOfNeededUser)
-        serializer = SerializeUsers(user)  
+        serializer = SerializeUser(user)  
         userData = serializer.data
-        return Response([neededData, totalPrice, amountOfItems, userData])
+        return Response([neededData, totalPrice, amountOfItems, userData], status=status.HTTP_200_OK)
+        
+
     
 @api_view(['POST'])
 def postOrder(request):
     if request.method == "POST":
-        serialized = SerializeOrders(data=request.data)
-        if serialized.is_valid():
-            serialized.create(request.data)  
+        data = request.data
+        data['user'] = request.user.pk
+        serializedData = SerializeOrders(data=data, many=False)
+        if serializedData.is_valid():
+            serializedData.save()
             return Response(status=status.HTTP_201_CREATED)
-        return Response(serialized.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializedData.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['GET'])
+def getInfo(request):
+    if request.method == "GET":
+        if request.user.is_authenticated:
+            user_data = {
+                'username': request.user.username,
+                'email': request.user.email,
+                'is_admin': request.user.is_staff
+            }
+            return Response(user_data)
+        else:
+            return Response({'detail': 'User isn`t auth'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteObject(request):
+    if request.method == "DELETE":
+        id = request.query_params.get('id')
+        typeOfObject = request.query_params.get('typeOfObject')
+        if typeOfObject == "product": 
+            obj = Item.objects.get(pk=id)
+            obj.delete()
+            return Response('Deleted product')
+        else: 
+            obj = Category.objects.get(pk=id)
+            obj.delete()
+            return Response('Deleted Category')
+    return Response('Something went wrong')
 
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def putObject(request):
+    if request.method == "PUT":
+        id = request.query_params.get('id')
+        typeOfObject = request.query_params.get('typeOfObject')
+        neededItem = Item.objects.get(pk=id)
 
+        query_dict = QueryDict('', mutable=True)
+        query_dict.update(request.data)
+        if typeOfObject == "product":
+            serializedData = SerializeItems(neededItem, data=query_dict)
+            if serializedData.is_valid():
+                print('save')
+                serializedData.save()
+                return Response(status=status.HTTP_200_OK)
+            else:
+                return Response('Something went wrong')
+    return Response('Something went wrong')
+
+@api_view(['PATCH'])
+@permission_classes([IsAdminUser])
+def patchOrder(requst):
+    if requst.method == "PATCH":
+        idOfNeededOrder = requst.data['idOfOrder']
+        newStatus = requst.data['status']
+        try:
+            neededOrder = Order.objects.get(pk=idOfNeededOrder)
+        except neededOrder.DoesNotExist:
+            return Response('Order is not found')
+        
+        neededOrder.status = newStatus
+        neededOrder.save()
+        return Response('Order updated')
+        
+
+    return Response('Something went wrong')
+
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+def postObject(request):
+    if request.method == "POST":
+        print(request.data)
+        typeOfObject = request.data['typeOfObject']
+        if typeOfObject == "category": 
+            data = {
+                'nameOfCategory': request.data['name'],
+                'imgOfCategory': request.data['img'],
+            }
+            serializedData = SerializeCategories(data=data)
+            if serializedData.is_valid():
+                serializedData.save()
+                return Response("Created")
+            else:
+                return Response("Something went wrong")
+        else:
+            data = {
+                'nameOfItem': request.data['name'],
+                'priceOfItem': request.data['price'],
+                'imgOfItem': request.data['img'],
+                'bestsellerItem': request.data['bestseller'],
+                'categoryOfItem': request.data['category']
+            }
+            serializedData = SerializeItems(data=data)
+            if serializedData.is_valid():
+                serializedData.create()
+                return Response("Created")
+            else:
+                return Response("Created")
+
+        
 
 class showcasePaginator(PageNumberPagination):
     page_size = 3

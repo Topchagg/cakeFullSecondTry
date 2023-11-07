@@ -5,6 +5,9 @@ def findBiggestNumber(querySet):
             a = i.priceOfItem
     return a
 
+# i.priceOfItem = querySet[i].priceOfItem
+# set - несколько объектов
+# i - объект 0 1 2 3
 def findPkOfNeededCategory(querySet):
     for i in querySet:
         return i.pk

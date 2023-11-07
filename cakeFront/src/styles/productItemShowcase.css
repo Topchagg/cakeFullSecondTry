@@ -77,3 +77,40 @@ border-radius: 30%;
     margin-left: 1px;
     margin-top: 2px;
 }
+
+.delete-btn {
+    background-color: red;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.update-btn {
+    background-color: lightblue;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.update-form-wrapper {
+    border: solid green 1px;
+    height: 100%;
+}
+
+.input-wrapper {
+    margin-top: 40px;
+}
+
+.input-form {
+    width: 140px;
+    font-size: 18px;
+    outline: none;
+    border: none;
+    border-bottom: #7777 solid 2px;
+    float: left;
+}
+
+.desc {
+    width: 320px;
+    height: 90px;
+}

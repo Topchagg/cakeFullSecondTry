@@ -34,9 +34,10 @@ function OrderWrapper(props) {
                     </div>
                     <div className="data-wrapper">
                         <p>User id:  <strong>{user['pk']}</strong></p>
-                        <p>Phone number: <strong>{user['userPhoneNumber']}</strong></p>
-                        <p>Name: <strong>{user['userName']}</strong></p>
-                        <p>Email: <strong>{user['userEmail']}</strong></p>
+                        <p>Phone number: <strong>{user['phoneNumber']}</strong></p>
+                        <p>First name: <strong>{user['first_name']}</strong></p>
+                        <p>Last name: <strong>{user['last_name']}</strong></p>
+                        <p>Email: <strong>{user['email']}</strong></p>
                     </div>
                 </div>
                     <div className="order-status-wrapper small-wrapper">
@@ -53,7 +54,7 @@ function OrderWrapper(props) {
                 </div>
                 <div className="items-wrapper-info">
                     {items.map((item) => (
-                        <ItemInOrderList nameOfItem={item['nameOfItem']} amount={item['Amount']} priceOfItem={item['priceOfItem']} />
+                        <ItemInOrderList img={item['imgOfItem']} nameOfItem={item['nameOfItem']} amount={item['Amount']} priceOfItem={item['priceOfItem']} />
                     ))}
                 </div>
             </div>

@@ -7,14 +7,14 @@ import CategoryItem from '../components/categoryItem'
 
 function HomeCatalogSection () {
 
-    const [page, setPage] = useState(1)
+
     const fetchCategoryItems =  categoryItemFetch((state) => state.fetchCategoryItems)
     const categoryItems =  categoryItemFetch((state) => state.categoryItems)
 
     const [show, setShow] = useState(false)
 
     useEffect(() => {
-        fetchCategoryItems(page,'false')
+        fetchCategoryItems(1,'true')
     },[])
 
     return (
@@ -22,7 +22,7 @@ function HomeCatalogSection () {
             <div className="large-text">Catalog</div>
             <div className="catalog-items-wrapper">
                 { categoryItems.map((categoryItem) => (
-                    <CategoryItem slug={categoryItem.slug} link={'Catalog/' + categoryItem.slug} title={categoryItem.nameOfCategory}/> 
+                    <CategoryItem id={categoryItem.pk} img={categoryItem.imgOfCategory} slug={categoryItem.slug} link={'Catalog/' + categoryItem.slug} title={categoryItem.nameOfCategory}/> 
                 ))}
             </div>
         </div>

@@ -1,5 +1,7 @@
-import { json } from 'react-router-dom'
 import {create} from 'zustand'
+import {storage} from './firebase'
+import { v4 as uuidv4 } from 'uuid';
+import {ref,uploadBytes,getDownloadURL, deleteObject, getMetadata} from 'firebase/storage'
 
 
 export const categoryItemFetch = create((set) => ({
@@ -9,7 +11,7 @@ export const categoryItemFetch = create((set) => ({
 
     fetchCategoryItems: (page,params) => set(async (state) => {
 
-        const result = await fetch('http://127.0.0.1:8000/getCategories/?showcase=' + params + '&&page=' + page)
+        const result = await fetch(`http://127.0.0.1:8000/getCategories/?showcase=${params}&page=${page=page}`)
         if(result.status === 404){
             set((state) => ({status: !state.status}))  
          }
@@ -29,9 +31,9 @@ export const forShowCaseFetch = create((set) => ({
     bestsellers: [],
 
     fetchBestsellersForShowcase: (page) => set(async(state) => {
-        const result = await fetch('http://127.0.0.1:8000/getBestsellers/?page=' + page)
+        const result = await fetch(`http://127.0.0.1:8000/getBestsellers/?page=${page}`)
         if(result.status === 404){
-            set((state) => ({status: !state.status}))  
+            set((state) => ({status: !state.status})) 
          }
         else {
             const json = await  result.json()
@@ -49,13 +51,13 @@ export const productItemFetch = create((set) => ({
     
 
    findBiggestPrice: (category) => set(async(state) => {
-    const result = await fetch('http://127.0.0.1:8000/getItems/?category=' + category )
+    const result = await fetch(`http://127.0.0.1:8000/getItems/?category=${category}` )
     const json = await result.json()
     set((state) => ({biggestPrice: json[1]}))
    }),
 
    fetchNeededItems: (bestsellerFilter, minPrice, maxPrice, page, lowHighFilter, category) => set(async(state) => {
-    const result = await fetch('http://127.0.0.1:8000/getItems/?page=' + page + '&&bestsellerFilter=' + bestsellerFilter + '&&maxPrice=' + maxPrice + '&&minPrice=' + minPrice + '&&lowHighFilter=' + lowHighFilter + '&&category=' + category )
+    const result = await fetch(`http://127.0.0.1:8000/getItems/?page=${page}&&bestsellerFilter=${bestsellerFilter}&&maxPrice=${maxPrice}&&minPrice=${minPrice}&&lowHighFilter=${lowHighFilter}&&category=${category}` )
     if(result.status === 404){
        set((state) => ({status: !state.status}))  
     }
@@ -64,7 +66,6 @@ export const productItemFetch = create((set) => ({
         const json = await result.json()
         set((state) => ({neededItems: json[0]}))
         set((state) => ({loaded: true}))
-        console.log(json[0])
     }
    })
 
@@ -80,48 +81,82 @@ export const fetchOrders = create((set) => ({
     totalPrice: 0,
     amountOfItems: 0,
     workStatus: ' ',
+    isCreate: false,
+    raiseError: false,
 
-    fetchNeededOrders: async (id, many) => {
+    fetchNeededOrders: async (id, many,) => {
+        const acsessToken = "Bearer " + localStorage.getItem('acsessToken')
         try {
             let url = 'http://127.0.0.1:8000/getOrders/';
             if (many === false) {
-                url = `http://127.0.0.1:8000/getOrders/?id=` + id;
+                url = `http://127.0.0.1:8000/getOrders/?id=${id}` ;
             }
-            const result = await fetch(url);
+            const result = await fetch(url, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': acsessToken, 
+                }
+            });
             const json = await result.json();
-            console.log(json)
             set((state) => ({
                 items: json[0][0]['items'],
                 workStatus: json[0][0]['status'],
                 orders: json[0],
                 totalPrice: json[1],
                 amountOfItems: json[2],
-                user: json[3],
+                user: json[3]
             }));
         } catch (error) {
             console.error('Error fetching orders:', error);
         }
     },
-    createNewOrder: (items, userPk) =>  set(async state  => {
+    createNewOrder: (items) =>  set(async state  => {
+        const acsessToken = "Bearer " + localStorage.getItem('acsessToken')
         const formData = {
-           user: userPk,
+           user: '',
            items: items,
         status: "Workin` at order"
         }
   
-          const response = await fetch('http://127.0.0.1:8000/postNewOrder', {
+          const response = await fetch('http://127.0.0.1:8000/postNewOrder/', {
           method: 'POST',
           headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': acsessToken,
+
               },
           body: JSON.stringify(formData)  
         })
         if (response.status === 201) {
-            console.log('Category created successfully');
+            set((state) => ({isCreate: true}))
+            localStorage.setItem('bigItems', '[]')
+            window.location.reload();
         } else {
-            console.log('Error creating category');
+            set((state) => ({raiseError: true}))
         }
       }),
+      
+      updateOrderStatus: (id, status) => set(async state => {
+        const acsessToken = "Bearer " + localStorage.getItem('acsessToken')
+        const result = await fetch(`http://127.0.0.1:8000/patch-order/`, {
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': acsessToken,
+            },
+            body: JSON.stringify({
+                idOfOrder: id,
+                status: status,
+            })
+        })
+        if (result.ok){
+            console.log("Everything fine!")
+            window.location.reload()
+        }
+        else {
+            console.log("Something went wrong")
+        }
+      })
 
 
       
@@ -139,7 +174,6 @@ export const cart = create((set) => ({
     toggleShowCart: () => set((state) => ({showCart: !state.showCart})),
 
     addItemIntoCart: (item) => set(async(state) => {
-        const foundSame = false
         if(state.items.length === 0){
             item.Amount = 1
             let newItemsArray;
@@ -221,8 +255,6 @@ updateTotalPrice: (itemPrice) => set((state) => ({totalPrice: state.totalPrice +
 
 setLocalItemsData: (localItems) => {
     set((state) => ({items: localItems}))
-    console.log(localItems)
-
     
     let m = 0;
     for(let i=0; i != localItems.length; i++){
@@ -253,6 +285,212 @@ deleteItemInCart: (nameOfItem) => set(async(state) => {
    
 }))
 
+
+
+export const userAction = create((set) => ({
+    isLogged: false,
+    isCreated: undefined,
+    isAdmin: false,
+    isLoading: false,
+    isCreated: undefined,
+    userName: '',
+    userEmail: '',
+    imgURL: '',
+
+    sign: (firstName, userPassword, last_name, phoneNumber,  userEmail, sign) =>  set(async(state) =>{
+            if(sign === 'up') {
+            set((state) => ({isLoading: true}))
+            const result = await fetch('http://127.0.0.1:8000/auth/users/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                },
+            body: JSON.stringify(
+                {
+                    "email": userEmail,
+                    "first_name": firstName,
+                    "last_name":  last_name,
+                    "password": userPassword,
+                    "phoneNumber": phoneNumber,
+                    "username": firstName,
+                }
+            )})
+                if(result.ok) {
+                    console.log('something')
+                    set((state) => ({isCreated: true}))
+                }
+                else {  
+                    set((state) => ({isCreated: false}))
+                }
+            }
+            else {
+                set((state) => ({isLoading: true}))
+                const result = await fetch('http://127.0.0.1:8000/auth/jwt/create/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        "username": firstName,
+                        "password": userPassword
+                    })
+                });
+                
+                if (result.ok) {
+                    const data = await result.json();
+                    const accessToken = data.access;
+                    const refreshToken = data.refresh; 
+                    localStorage.setItem('acsessToken', accessToken)
+                    localStorage.setItem('refreshToken', refreshToken)
+                    console.log('something')
+                    set((state) => ({
+                        isLogged: true,
+                        isLoading: false
+                    }))
+                    window.location.reload();
+                } else {
+                    console.error("Something went wrong");
+                    set((state) => ({isLogged: false}))
+                    set((state) => ({isLoading: false}))
+                }
+        }
+    }),
+    userAuth: () => set(async(state) => {
+        const acsessToken = "Bearer " + localStorage.getItem('acsessToken')
+
+        const result = await fetch('http://127.0.0.1:8000/get-info/' ,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': acsessToken,
+            }
+        })
+        if(result.ok){
+            const data = await result.json();
+            set((state) => ({
+                isAdmin: data.is_admin,
+                userName: data.username,
+                userEmail: data.email,
+                isLogged: true,
+            }))
+        }
+        else {
+            console.log('Something went wrong')
+            set((state) => ({isLogged: false}))
+        }
+    }),
+    logOut: () => set(async(state) => {
+        localStorage.setItem('acsessToken', '')
+        localStorage.setItem('refreshToken', '')
+        set((state) => ({isLogged: false}))
+        window.location.reload();
+    }),
+    deleteObject: (id,typeOfObject,img) => set(async(state) => {
+        const acsessToken = "Bearer " + localStorage.getItem('acsessToken')
+        const result = await fetch(`http://127.0.0.1:8000/delete-object/?id=${id}&&typeOfObject=${typeOfObject}`,{
+            method: "Delete",
+            headers: {  
+                'Content-Type': 'application/json',
+                'Authorization': acsessToken,
+            } 
+        })
+        if(result.ok){
+            console.log(img)
+            getMetadata(ref(storage,img)).then((metadata) => {
+                const filePath = metadata.fullPath
+                const fileRef = ref(storage, filePath)
+                deleteObject(fileRef).then(() => {
+                    console.log('Deleted');
+                    window.location.reload();
+                })
+            })
+        }
+        else {
+            console.log('Something went wrong!')
+        }   
+    }),
+    updateObject: (id, typeOfObject,price,name,bestseller,img, defaultImg,description, category) => set(async(state) => {
+        set((state) => ({isLoading: true}))
+        const accessToken = "Bearer " + localStorage.getItem('acsessToken'); 
+        let data
+        if(img){
+            const imgRef = ref(storage, uuidv4());
+            await uploadBytes(imgRef, img);
+            const imgURL = await getDownloadURL(imgRef);
+            data = {
+                nameOfItem: name,
+                priceOfItem: price,
+                imgOfItem: imgURL,
+                categoryOfItem: category,
+                bestsellerItem: bestseller,
+                descriptionOfItem: description
+            };
+            console.log('here')
+        }
+        else{
+            data = {
+                nameOfItem: name,
+                priceOfItem: price,
+                imgOfItem: defaultImg,
+                categoryOfItem: category,
+                BestsellerItem: bestseller,
+                descriptionOfItem: description  
+            };
+        }
+        console.log(data)
+        const result = await fetch(`http://127.0.0.1:8000/put-object/?id=${id}&typeOfObject=${typeOfObject}`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': accessToken
+            },
+            body: JSON.stringify(data)
+        });
+        if(result.ok){
+            console.log('everything fine')   
+            window.location.reload(); 
+        }
+        else {
+            console.log('something went wrong')
+            set((state) => ({isLoading:false}))
+        }
+    }), 
+    createObject: (typeOfObject, name, img, price,  bestseller, description,category ) => set(async(state) => {
+        const accessToken = "Bearer " + localStorage.getItem('acsessToken'); 
+        set((state) => ({isLoading: true}))
+        if(typeOfObject === "category"){
+            const imgRef = ref(storage, uuidv4());
+            await uploadBytes(imgRef, img);
+            const imgURL = await getDownloadURL(imgRef);
+            const data = {
+                name: name,
+                img: imgURL,
+                typeOfObject: typeOfObject
+            }
+            const result = await fetch('http://127.0.0.1:8000/create-object/', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': accessToken
+                },
+                body: JSON.stringify(data)  
+            })
+            if(result.ok){
+                console.log('Created')
+                set((state) => ({isLoading: false}))
+                window.location.reload()
+            }
+            else {
+                console.log("Something went wrong")
+            }
+        }
+        else {
+
+        }
+    })
+    
+}))
+
 export const tools = create((set) =>({
 
     incrementPage: (page, setPageFunc) => {
@@ -272,7 +510,8 @@ export const tools = create((set) =>({
             setPageFunc(1)
         }
     }),
-   
+
+  
     
     
 

@@ -1,9 +1,9 @@
 import '../styles/homeBestsellerSection.css'
 import ProductItem from '../components/productItemShowcase'
-import LinkButton from '../components/linkButton'
+// import LinkButton from '../components/linkButton'
 import Carousel from '../components/carouselBlock'
 
-import { forShowCaseFetch, tools } from '../store'
+import { forShowCaseFetch, tools, userAction } from '../store'
 import { useEffect, useState } from 'react'
 
 
@@ -37,7 +37,7 @@ function HomeBestsellerSection () {
             <div className="large-text">BESTSELLERS</div> 
             <div className="bestsellers-items-wrapper">
             {bestsellers.map((item) => (
-                <ProductItem bestseller={item.BestsellerItem} img={item.imgOfItem} price={item.priceOfItem} name={item.nameOfItem} fullItem={item} />
+                <ProductItem id={item.pk} bestseller={item.BestsellerItem} img={item.imgOfItem} price={item.priceOfItem} name={item.nameOfItem} fullItem={item} description={item.descriptionOfItem} category={item.categoryOfItem} />
                       
         ))}
             </div>

@@ -1,0 +1,50 @@
+.main-section {
+    margin-top: 60px;
+    width: 100%;
+    height: 695px;
+    display: flex;
+    justify-content: center;
+}
+
+.sign-section {
+    width: 700px;
+    height: 695;
+    border: solid black 1px;
+    text-align: center;
+}
+
+.form-wrapper {
+    margin-top: 40px;
+    height: 420px;
+    width: 400px;
+    margin-left: 160px;
+}
+
+.form-label {
+    font-size: 24px;
+}
+
+.form-input {
+    border: none;
+    border-bottom: solid 1px #7777;
+    background-color: inherit;
+    width: 80%;
+    margin-top: 16px;
+    outline: none;
+}
+
+.check-user-account {
+    cursor: pointer;
+    font-size: 24px;
+    transition: 400ms;
+}
+
+.check-user-account:hover {
+    color: red;
+}
+
+.logout-btn {
+    width: 100px;
+    height: 100px;
+    
+}
