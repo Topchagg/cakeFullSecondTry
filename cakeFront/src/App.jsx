@@ -24,14 +24,14 @@ function App() {
     <Routes>
         <Route path='/' element={<Layout/>} > 
           <Route index element={<HomePage/>} ></Route>
-          <Route path='About' element={<AboutPage/>} ></Route>
-          <Route path='Catalog' element={<CatalogPage/>} ></Route>
-          <Route path="Delivery" element={<DeliveryPage/>} ></Route>
+          <Route path='about' element={<AboutPage/>} ></Route>
+          <Route path='catalog' element={<CatalogPage/>} ></Route>
+          <Route path="delivery" element={<DeliveryPage/>} ></Route>
           <Route path='sign-in' element={<LogInLogOutPage/>}></Route>
           <Route path='orders' element={<OrderPage/>}></Route>
 
 
-          <Route path="Catalog/:category" element={<ItemsWrapper/>}></Route>
+          <Route path="catalog/:category" element={<ItemsWrapper/>}></Route>
 
           <Route path="orders" element={<OrderPage/>} ></Route>
           <Route path="orders/:id"  element={<OrderWrapper/>}></Route>

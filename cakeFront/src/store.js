@@ -485,8 +485,37 @@ export const userAction = create((set) => ({
             }
         }
         else {
-
+            const imgRef = ref(storage, uuidv4());
+            await uploadBytes(imgRef, img);
+            const imgURL = await getDownloadURL(imgRef);
+            const data = {
+                name: name,
+                price: price,
+                typeOfObject: typeOfObject,
+                img: imgURL,
+                descriptionOfItem: 'da',
+                category: category,
+                bestseller: bestseller
+            }
+            const result = await fetch("http://127.0.0.1:8000/create-object/",{
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': accessToken
+                },
+                body: JSON.stringify(data),
+            })
+            if(result.ok){
+                console.log('Everything is fine!')
+                window.location.reload();
+            }
+            else{
+                console.log('something went wrong')
+            }
         }
+    }),
+    searchProducts: (text) => set(async(state) => {
+        
     })
     
 }))

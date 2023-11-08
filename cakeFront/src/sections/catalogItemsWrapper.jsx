@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import Carousel from '../components/carouselBlock'
 
-import {productItemFetch} from '../store'
+import {productItemFetch, userAction} from '../store'
 import ProductItem from '../components/productItemShowcase'
 import { useParams } from 'react-router-dom'
 
@@ -33,11 +33,12 @@ function itemsWrapper () {
     const neededItems = productItemFetch((state) => state.neededItems)
     const loaded = productItemFetch((state) => state.loaded)
     const status = productItemFetch((state) => state.status)
+    const createObject = userAction((state) => state.createObject)
 
     const [page, setPage] = useState(1)
     const [lowHighFilter, setLowHighFilter] = useState('none')
     const [bestsellerFilter, setBestsellerFilter] = useState(false)
-    const [maxPrice, setMaxPrice] = useState(500)
+    const [maxPrice, setMaxPrice] = useState(biggestPrice)
     const [minPrice, setMinPrice] = useState(0)
 
     function changeMaxPrice(e) {
@@ -104,7 +105,7 @@ function itemsWrapper () {
         <div className='create-product' >
             <div className="creating-form-wrapper">
                 <button className='delete-btn' onClick={() => (setIsCreating(!setIsCreating))}>Decline</button>
-                <button className='update-btn'>Create</button>
+                <button className='update-btn' onClick={() => (createObject('product',name,image,price,bestseller,'da',category))} >Create</button>
                 <div className="form-wrapper">
                     <form action="">
                         <div className="input-wrapper">
@@ -119,9 +120,9 @@ function itemsWrapper () {
                         <div className="input-wrapper">
                             Image: <input className='input-form'  type="file" onChange={imageHandler} />
                         </div>
-                        {/* <div className="input-wrapper">
-                            Category: {props.category}
-                        </div> */}
+                        <div className="input-wrapper">
+                            Category: {category}
+                        </div>
                     </form>
                 </div>
             </div>

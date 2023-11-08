@@ -56,3 +56,9 @@
 .amount-num {
   margin-top: 2px;
 }
+
+.header__search {
+    position: absolute;
+    margin-top: 28px;
+    margin-left: -290px;
+}

@@ -24,6 +24,10 @@ def getCategories(request):
         showcase = request.query_params.get('showcase')
         if showcase == 'true':
             neededCategories =  Category.objects.all()[:3]
+        elif showcase == 'option-select':
+            neededCategories = Category.objects.all()
+            serializedneededCategory  = SerializeCategories(neededCategories, many=True)
+            return Response(serializedneededCategory.data)
         else:
             neededCategories =  Category.objects.all()
 
@@ -57,6 +61,8 @@ def getItems(request):
         
         allItems = Item.objects.filter(categoryOfItem_id = pkOfNeededCategory)
 
+
+        
         biggestNumber = findBiggestNumber(allItems)
 
         filterBestsellers = request.GET.get('bestsellerFilter')
@@ -195,7 +201,6 @@ def patchOrder(requst):
 @permission_classes([IsAdminUser])
 def postObject(request):
     if request.method == "POST":
-        print(request.data)
         typeOfObject = request.data['typeOfObject']
         if typeOfObject == "category": 
             data = {
@@ -209,16 +214,21 @@ def postObject(request):
             else:
                 return Response("Something went wrong")
         else:
+            categoryOfItem = Category.objects.filter(slug=request.data['category'])
+            categoryData = SerializeCategories(categoryOfItem[0], many=False)
             data = {
                 'nameOfItem': request.data['name'],
                 'priceOfItem': request.data['price'],
                 'imgOfItem': request.data['img'],
                 'bestsellerItem': request.data['bestseller'],
-                'categoryOfItem': request.data['category']
+                'descriptionOfItem': "da",
+                'categoryOfItem': categoryData.data['pk']
             }
-            serializedData = SerializeItems(data=data)
+            query_dict = QueryDict('', mutable=True)
+            query_dict.update(data)
+            serializedData = SerializeItems(data=query_dict)
             if serializedData.is_valid():
-                serializedData.create()
+                serializedData.save()
                 return Response("Created")
             else:
                 return Response("Created")
