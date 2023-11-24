@@ -402,7 +402,7 @@ export const userAction = create((set) => ({
                 deleteObject(fileRef).then(() => {
                     console.log('Deleted');
                     window.location.reload();
-                })
+                })  
             })
         }
         else {
@@ -437,7 +437,6 @@ export const userAction = create((set) => ({
                 descriptionOfItem: description  
             };
         }
-        console.log(data)
         const result = await fetch(`http://127.0.0.1:8000/put-object/?id=${id}&typeOfObject=${typeOfObject}`, {
             method: "PUT",
             headers: {
