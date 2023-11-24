@@ -28,7 +28,7 @@ function Header () {
         <>
         <header className="header">
             <div className="logo-wrapper">
-                <Link to='/'><div className="logo">Dorty</div></Link>
+                <Link to='/cakeFullSecondTry'><div className="logo">Dorty</div></Link>
             </div>
             <div className="nav-menu-wrapper">
                 <Link to='about'><div className="nav-menu__item">About us</div></Link>

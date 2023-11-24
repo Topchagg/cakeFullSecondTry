@@ -22,7 +22,7 @@ function App() {
   return (
     <>
     <Routes>
-        <Route path='/' element={<Layout/>} > 
+        <Route path='/cakeFullSecondTry' element={<Layout/>} > 
           <Route index element={<HomePage/>}></Route>
           <Route path='about' element={<AboutPage/>} ></Route>
           <Route path='catalog' element={<CatalogPage/>} ></Route>
