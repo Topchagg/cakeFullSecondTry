@@ -1,4 +1,4 @@
-import '../styles/homeIndividualOrderSection.css'
+
 
 
 function HomeIndividualOrderSection() {

@@ -1,4 +1,4 @@
-import '../styles/homeChooseUsSection.css'
+
 import ChooseUsItem from '../components/ChooseUsItem'
 
 function HomeChooseUsSection () {
@@ -14,7 +14,6 @@ function HomeChooseUsSection () {
         </div>
 
         <div className="banner-wrapper">
-             <img className='banner' src="Banner.png" alt="" />
         </div>
         </>
     )

@@ -1,4 +1,4 @@
-import '../styles/homeBestsellerSection.css'
+
 import ProductItem from '../components/productItemShowcase'
 // import LinkButton from '../components/linkButton'
 import Carousel from '../components/carouselBlock'

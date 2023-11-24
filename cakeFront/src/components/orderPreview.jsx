@@ -3,7 +3,6 @@ import {Link,} from 'react-router-dom'
 
 import { userAction, fetchOrders } from '../store'
 
-import '../styles/OrderPreview.css'
 
 
 function OrderPreview(props) {

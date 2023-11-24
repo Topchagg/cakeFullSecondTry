@@ -5,7 +5,7 @@ import Carousel from '../components/carouselBlock'
 import {categoryItemFetch, tools, userAction} from '../store'
 import CategoryItem from "../components/categoryItem"
 
-import '../styles/catalogCategoryWrapper.css'
+
 
 function CategoriesWrapper () {
 

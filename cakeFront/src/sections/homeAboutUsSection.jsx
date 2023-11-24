@@ -1,4 +1,4 @@
-import '../styles/homeAboutUsSection.css'
+
 
 import LinkButton from '../components/linkButton'
 
@@ -7,7 +7,6 @@ function HomeAboutUsSection () {
     return (
         <div className="home-about-us-section">
             <div className="home-about-us-img-wrapper">
-                <img src="about.png" alt="" />
             </div>
             <div className="home-about-us-text-wrapper">
                 <div className="large-text">About us</div>

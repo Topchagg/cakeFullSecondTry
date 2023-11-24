@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom'
 
 
 
-import '../styles/HomeOpenSection.css'
+
 
 import LinkButton from '../components/linkButton'
 
@@ -17,7 +17,7 @@ function HomeOpenSection () {
                 </div>
             </div>  
             <div className="home-open-img-wrapper">
-                <img src="Mask group.png" alt="" />
+                <img src="" alt="" />
             </div>
         </div>
     )

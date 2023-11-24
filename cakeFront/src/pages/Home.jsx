@@ -7,8 +7,6 @@ import HomeBestsellerSection from "../sections/homeBestsellerSection"
 import HomeIndividualOrderSection from '../sections/homeIndividualOrderSection'
 
 
-import '../styles/default.css'
-import '../styles/texts.css'
 
 
 function HomePage () {

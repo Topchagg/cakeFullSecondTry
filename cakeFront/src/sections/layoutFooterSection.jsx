@@ -1,7 +1,6 @@
 import {Link} from 'react-router-dom'
 
 
-import '../styles/layoutFooterSection.css'
 
 function Footer ()  {
     return (
@@ -13,9 +12,6 @@ function Footer ()  {
                        <div className="large-text">Dorty</div>
                     </div>
                     <div className="media-wrapper">
-                        <Link><img src="instagram.png" alt="" /></Link>
-                        <Link><img src="telegram.png" alt="" /></Link>
-                        <Link><img src="twitter.png" alt="" /></Link>
                     </div>
                 </div>
 

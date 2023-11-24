@@ -4,7 +4,7 @@ import { cart } from "../store"
 import AddButton from "./addButton"
 import DeleteButton from "./deleteButton"
 
-import '../styles/itemInCart.css'
+
 
 
 

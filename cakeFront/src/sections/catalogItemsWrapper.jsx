@@ -6,7 +6,7 @@ import {productItemFetch, userAction} from '../store'
 import ProductItem from '../components/productItemShowcase'
 import { useParams } from 'react-router-dom'
 
-import '../styles/catalogItemsWrapper.css'
+
 
 
 function itemsWrapper () {

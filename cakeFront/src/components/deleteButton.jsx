@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import { cart } from '../store'
 
-import '../styles/deleteButton.css'
+
 
 function DeleteButton (props) {
 

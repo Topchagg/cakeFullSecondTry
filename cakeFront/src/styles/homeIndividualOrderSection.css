@@ -1,17 +1,4 @@
-.individual-order-section {
-    width: 90%;
-    margin: 190px auto;
-    height: 770px;
-    background-image: url('./background.png');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
 
-}
 
 .individual-order-form-wrapper {
     height: 610px;

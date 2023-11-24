@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { categoryItemFetch } from '../store'
-import '../styles/homeCatalogSection.css'
+
 
 
 import CategoryItem from '../components/categoryItem'

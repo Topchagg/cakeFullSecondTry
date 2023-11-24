@@ -1,5 +1,5 @@
 
-import '../styles/ItemInOrderList.css'
+
 
 function ItemInOrderList(props) {
     return (

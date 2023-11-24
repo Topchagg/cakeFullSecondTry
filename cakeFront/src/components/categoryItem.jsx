@@ -5,8 +5,7 @@ import { userAction } from '../store'
 
 import Attention from '../components/attention.jsx'
 
-import '../styles/default.css'
-import '../styles/categoryItem.css'
+
 
 
 

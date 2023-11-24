@@ -1,5 +1,4 @@
 
-import '../styles/componentsLinkButton.css'
 import {Link} from 'react-router-dom'
 
 

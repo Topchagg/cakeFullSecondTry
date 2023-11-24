@@ -6,7 +6,7 @@ import ItemInOrderList from "./itemInOrderList"
 import { fetchOrders } from "../store"
 
 
-import '../styles/orderWrapper.css'
+
 
 function OrderWrapper(props) {
 
