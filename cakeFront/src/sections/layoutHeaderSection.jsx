@@ -38,8 +38,8 @@ function Header () {
                 <Link to='sign-in'><div className="nav-menu__item">Log in/Log out</div></Link>
             </div>
             <div className="icons-wrapper">
-                <img className='header__icon'  alt="" onClick={() => (setIsSearch(!isSearch))} />
-                <img className='header__icon'alt="" onClick={() => (toggleShowCart())}/>
+                <img className='header__icon' src='carbon_search.svg' alt="" onClick={() => (setIsSearch(!isSearch))} />
+                <img className='header__icon' src='heroicons_shopping-bag.svg' alt="" onClick={() => (toggleShowCart())}/>
                 <div className="header__icon amount">
                     <div className="amount-num">{Amount}</div>
                 </div>

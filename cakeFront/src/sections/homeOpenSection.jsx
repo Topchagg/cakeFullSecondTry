@@ -17,7 +17,7 @@ function HomeOpenSection () {
                 </div>
             </div>  
             <div className="home-open-img-wrapper">
-                <img src="" alt="" />
+                <img src="Mask group.png" alt="" />
             </div>
         </div>
     )

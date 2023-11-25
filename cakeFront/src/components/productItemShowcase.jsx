@@ -7,6 +7,8 @@ import AddButton from "./addButton"
 import { cart, userAction } from '../store'
 
 
+import '/src/styles/productItemShowcase.css'
+
 function ProductItem (props) {
 
     const [infoBestseller, setInfoBestseller] = useState(false)

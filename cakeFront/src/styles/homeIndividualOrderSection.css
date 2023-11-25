@@ -1,3 +1,11 @@
+.individual-order-section {
+    background-image: url(background.png);
+    background-attachment:fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 750px;
+}
 
 
 .individual-order-form-wrapper {

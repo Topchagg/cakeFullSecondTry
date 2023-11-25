@@ -1,50 +1,101 @@
-.main-section {
-    margin-top: 60px;
-    width: 100%;
-    height: 695px;
+.form-image-wrapper {
+    width: 1040px;
+    height: 666px;
+    margin: 0 auto;
     display: flex;
-    justify-content: center;
+    font-family: 'NanumMyeongjo';
 }
 
-.sign-section {
-    width: 700px;
-    height: 695;
-    border: solid black 1px;
-    text-align: center;
+.action-block-wrapper {
+    border-bottom-left-radius: 50px;    
+    border-top-left-radius: 50px;
+    width: 620px;
+    height: 100%;
+    background-color: rgba(191, 195, 196, 1);
 }
 
 .form-wrapper {
-    margin-top: 40px;
-    height: 420px;
-    width: 400px;
-    margin-left: 160px;
-}
-
-.form-label {
-    font-size: 24px;
-}
-
-.form-input {
-    border: none;
-    border-bottom: solid 1px #7777;
+    width: 455px;
+    height: 90%;
+    margin-top: 42px;
+    margin-left: 62px;
     background-color: inherit;
-    width: 80%;
-    margin-top: 16px;
-    outline: none;
 }
 
-.check-user-account {
+.img-wrapper {
+    width: 400px;
+    height: 100%;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.log-text-wrapper {
+    height: 110px;
+}
+
+.log-title {
+    font-size: 42px;
+    font-weight: 700;
+    font-family: 'NanumMyeongjo';
+}
+
+.ask-account-text {
+    margin-top: 10px;
+    font-size: 20px;
+    color: rgba(94, 85, 85, 1);
+    font-family: 'inter';
+    margin-top: 20px;
+}
+
+.create-account-text {
+    color: blue;
     cursor: pointer;
-    font-size: 24px;
+}
+
+.form-block {
+    margin-top: 10px
+}
+
+.register-input-wrapper {
+    margin-top: 25px;
+}
+
+.register-form-input {
+    margin-top: 5px;
+    width: 100%;
+    outline: none;
+    border: none;
+    border-bottom: rgba(119, 119, 119, 0.7) solid 1px;
+    background-color: inherit;
+    font-size: 18px;
+}
+
+.register-label {
+    font-family: 'NanumMyeongjo';
+    font-size: 18px;
+}
+
+
+.register-btn {
+    width: 180px;
+    height: 60px;
+    border-radius: 100px;
+    cursor: pointer;
+    margin-top: 40px;
+    border: none;
+    font-size: 18px;
     transition: 400ms;
+    font-family: 'inter';
 }
 
-.check-user-account:hover {
-    color: red;
+.register-btn:hover {
+    box-shadow: 0 0 60px whitesmoke;
+    font-size: 20px;
 }
 
-.logout-btn {
-    width: 100px;
-    height: 100px;
-    
+.login {
+    border: solid rgba(191, 195, 196, 1) 1px;
+    border-radius: 0px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
 }

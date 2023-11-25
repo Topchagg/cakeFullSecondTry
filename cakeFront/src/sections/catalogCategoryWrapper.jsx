@@ -46,7 +46,7 @@ function CategoriesWrapper () {
             <>
                 <div className="categories-wrapper">
                 {loading || categoryItems.map((categoryItem) => (
-                    <CategoryItem  img={categoryItem.imgOfCategory}  id={categoryItem.pk} title={categoryItem.nameOfCategory} slug={categoryItem.slug} link={categoryItem.slug}  />
+                    <CategoryItem key={categoryItem.pk}  img={categoryItem.imgOfCategory}  id={categoryItem.pk} title={categoryItem.nameOfCategory} slug={categoryItem.slug} link={categoryItem.slug}  />
                 ))}
                 </div>
                 <>

@@ -130,7 +130,6 @@ export const fetchOrders = create((set) => ({
         if (response.status === 201) {
             set((state) => ({isCreate: true}))
             localStorage.setItem('bigItems', '[]')
-            window.location.reload();
         } else {
             set((state) => ({raiseError: true}))
         }
@@ -316,12 +315,12 @@ export const userAction = create((set) => ({
                 }
             )})
                 if(result.ok) {
-                    console.log('something')
                     set((state) => ({isCreated: true}))
                 }
                 else {  
                     set((state) => ({isCreated: false}))
                 }
+                set((state) => ({isLoading: false}))
             }
             else {
                 set((state) => ({isLoading: true}))
@@ -342,7 +341,6 @@ export const userAction = create((set) => ({
                     const refreshToken = data.refresh; 
                     localStorage.setItem('acsessToken', accessToken)
                     localStorage.setItem('refreshToken', refreshToken)
-                    console.log('something')
                     set((state) => ({
                         isLogged: true,
                         isLoading: false
