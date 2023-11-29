@@ -66,7 +66,7 @@ export const productItemFetch = create((set) => ({
 
     else {
         const json = await result.json()
-        set((state) => ({neededItems: json[0]}))
+        set((state) => ({neededItems: json}))
         set((state) => ({loaded: true}))
     }
    }),
