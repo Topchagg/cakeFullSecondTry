@@ -299,9 +299,9 @@ deleteItemInCart: (nameOfItem) => set(async(state) => {
 export const userAction = create((set) => ({
     isLogged: false,
     isCreated: undefined,
-    isAction: false,
     isAdmin: false,
     isLoading: false,
+    isCreated: undefined,
     userName: '',
     userEmail: '',
     imgURL: '',
@@ -394,7 +394,6 @@ export const userAction = create((set) => ({
     
     }),
     deleteObject: (id,typeOfObject,img) => set(async(state) => {
-        set((state) => ({isLoading:true}))
         const acsessToken = "Bearer " + localStorage.getItem('acsessToken')
         const result = await fetch(`http://127.0.0.1:8000/delete-object/?id=${id}&&typeOfObject=${typeOfObject}`,{
             method: "Delete",
@@ -404,14 +403,13 @@ export const userAction = create((set) => ({
             } 
         })
         if(result.ok){
+            console.log(img)
             getMetadata(ref(storage,img)).then((metadata) => {
                 const filePath = metadata.fullPath
                 const fileRef = ref(storage, filePath)
                 deleteObject(fileRef).then(() => {
                     console.log('Deleted');
-                    set((state) => ({isAction: !state.isAction}))
-                    setTimeout(2000)
-                    set((state) => ({isLoading: false}))
+                
                 })  
             })
         }
@@ -435,6 +433,7 @@ export const userAction = create((set) => ({
                 bestsellerItem: bestseller,
                 descriptionOfItem: description
             };
+            console.log('here')
         }
         else{
             data = {
@@ -456,7 +455,7 @@ export const userAction = create((set) => ({
         });
         if(result.ok){
             console.log('everything fine')   
-            set((state) => ({isAction: !state.isAction}))
+         
         }
         else {
             console.log('something went wrong')
@@ -464,8 +463,8 @@ export const userAction = create((set) => ({
         }
     }), 
     createObject: (typeOfObject, name, img, price,  bestseller, description,category ) => set(async(state) => {
-        set((state) => ({isLoading:true}))
         const accessToken = "Bearer " + localStorage.getItem('acsessToken'); 
+        set((state) => ({isLoading: true}))
         if(typeOfObject === "category"){
             const imgRef = ref(storage, uuidv4());
             await uploadBytes(imgRef, img);
@@ -485,9 +484,8 @@ export const userAction = create((set) => ({
             })
             if(result.ok){
                 console.log('Created')
-                setTimeout(2000)
                 set((state) => ({isLoading: false}))
-                set((state) => ({isAction: !state.isAction}))
+                window.location.reload()
             }
             else {
                 console.log("Something went wrong")
@@ -502,11 +500,10 @@ export const userAction = create((set) => ({
                 price: price,
                 typeOfObject: typeOfObject,
                 img: imgURL,
-                descriptionOfItem: description,
+                descriptionOfItem: 'da',
                 category: category,
                 bestseller: bestseller
             }
-            console.log(data)
             const result = await fetch("http://127.0.0.1:8000/create-object/",{
                 method: "POST",
                 headers: {
@@ -517,8 +514,7 @@ export const userAction = create((set) => ({
             })
             if(result.ok){
                 console.log('Everything is fine!')
-                set((state) => ({isAction: !state.isAction}))
-                set((state) => ({isLoading: false}))
+            
             }
             else{
                 console.log('something went wrong')

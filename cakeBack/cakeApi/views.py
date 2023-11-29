@@ -228,7 +228,7 @@ def postObject(request):
                 'priceOfItem': request.data['price'],
                 'imgOfItem': request.data['img'],
                 'bestsellerItem': request.data['bestseller'],
-                'descriptionOfItem': request.data['descriptionOfItem'],
+                'descriptionOfItem': "da",
                 'categoryOfItem': categoryData.data['pk']
             }
             query_dict = QueryDict('', mutable=True)

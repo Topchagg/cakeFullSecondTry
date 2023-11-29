@@ -5,7 +5,6 @@ import Carousel from '../components/carouselBlock'
 import {productItemFetch, userAction} from '../store'
 import ProductItem from '../components/productItemShowcase'
 import { useParams } from 'react-router-dom'
-import IsLoading from '../components/isLoading.jsx'
 
 
 
@@ -16,7 +15,6 @@ function itemsWrapper () {
     const [price, setPrice] = useState('')
     const [bestseller, setBestseller] = useState('')
     const [image, setImage] = useState('')
-    const [about, setAbout] = useState('')
     
     function imageHandler(e) {
         if(e.target.files[0]){
@@ -36,16 +34,12 @@ function itemsWrapper () {
     const loaded = productItemFetch((state) => state.loaded)
     const status = productItemFetch((state) => state.status)
     const createObject = userAction((state) => state.createObject)
-    const isLogged = userAction((state) => state.isLogged)
-    const isLoading = userAction((state) => state.isLoading)
 
     const [page, setPage] = useState(1)
     const [lowHighFilter, setLowHighFilter] = useState('none')
     const [bestsellerFilter, setBestsellerFilter] = useState(false)
     const [maxPrice, setMaxPrice] = useState(biggestPrice)
     const [minPrice, setMinPrice] = useState(0)
-
-    const isAction = userAction((state) => state.isAction)
 
     function changeMaxPrice(e) {
         setMaxPrice(e.target.value);
@@ -64,12 +58,6 @@ function itemsWrapper () {
     },[biggestPrice])
 
     useEffect(() => {
-        if(isCreating === true){
-            setIsCreating(!isCreating)
-        }
-    },[isAction])
-
-    useEffect(() => {
       
         const timer = setTimeout(() => {
             
@@ -77,22 +65,16 @@ function itemsWrapper () {
         }, 200);
 
         return () => clearTimeout(timer);
-    }, [minPrice, maxPrice, bestsellerFilter,lowHighFilter, isAction]);
+    }, [minPrice, maxPrice, bestsellerFilter,lowHighFilter]);
 
     useEffect(() => {
         fetchNeededItems(bestsellerFilter, minPrice, maxPrice, page, lowHighFilter,category )
     }, [page])
 
-    useEffect(() => {
-        console.log('check')
-    },[isLoading])
-
-    
 
 
    return (
     <>
-            {isLoading && <IsLoading/>}
             {isCreating || 
             <>
             {loaded && 
@@ -112,8 +94,9 @@ function itemsWrapper () {
                         <option className='option-item' value="highToLow">High to low</option>
                     </select>
                 </div>
+                {/* <button className='update-btn' onClick={() => (setIsCreating(!isCreating))} >Create new item</button> */}
               </div>
-              {isLogged && <button className="create-item-button" onClick={() => (setIsCreating(!isCreating))}>Create new item</button>}
+              <button className="create-item-button" onClick={() => (setIsCreating(!isCreating))}>Create new item</button>
                 </div>}
            {loaded && 
                 <div className="items-wrapper">
@@ -122,46 +105,36 @@ function itemsWrapper () {
                 ))}
             </div>}
         {loaded &&
-            <div className="catalog-carousel-wrapper"><Carousel page={page} setPage={setPage} status={status} /></div>
+            <div className="carousel-wrapper"><Carousel page={page} setPage={setPage} status={status} /></div>
           }
             </>}
 
         {isCreating && 
-        <>
-        <div className="item-page">
-            <div className="input-file-btn">
-            <label className='upload-img' htmlFor="upload-img">
-                <div className="upload-img-btn-wrapper">
-                    <div className="upload-img-text-wrapper">Upload photo</div>
-                    <div className="upload-img-wrapper"><img src="/upload.png" alt="" /></div>
+        <div className='create-product' >
+            <div className="creating-form-wrapper">
+                <button className='delete-btn' onClick={() => (setIsCreating(!setIsCreating))}>Decline</button>
+                <button className='update-btn' onClick={() => (createObject('product',name,image,price,bestseller,'da',category))} >Create</button>
+                <div className="form-wrapper">
+                    <form action="">
+                        <div className="input-wrapper">
+                            Name: <input className='input-form' placeholder='Write here' type="text" onChange={(e) => (setName(e.target.value))} />
+                        </div>
+                        <div className="input-wrapper">
+                            Price: <input className='input-form'  type="number" onChange={(e) => (setPrice(e.target.value))} />
+                        </div>
+                        <div className="input-wrapper">
+                            Bestseller: <input className='input-form'  type="checkbox" onChange={(e) => (setBestseller(e.target.value))} />
+                        </div>
+                        <div className="input-wrapper">
+                            Image: <input className='input-form'  type="file" onChange={imageHandler} />
+                        </div>
+                        <div className="input-wrapper">
+                            Category: {category}
+                        </div>
+                    </form>
                 </div>
-            </label>
-            <input id="upload-img" className='input-file' onChange={imageHandler} type="file" />
             </div>
-            <div className="line-wrapper">
-                <img src="/line.png" alt="" />
-            </div>
-                <form action="" className='create-form-wrapper'>
-                    <div className="input-wrapper">
-                        <input className='register-form-input' placeholder='Name' type="text" onChange={(e) => (setName(e.target.value))} />
-                    </div>
-                    <div className="input-wrapper">
-                        <input className='register-form-input' placeholder='Price'  type="number" onChange={(e) => (setPrice(e.target.value))} />
-                    </div>
-                    <div className="input-wrapper">
-                        Bestseller? <input className='input-form'  type="checkbox" onChange={(e) => (setBestseller(e.target.value))} />
-                    </div>
-                </form>
-            <div className="about-wrapper-input">
-                <textarea className='input-form-about' onChange={(e) => (setAbout(e.target.value))} placeholder='About'></textarea>
-            </div>
-        </div>
-        <div className="buttons-wrapper">
-            <div className="create-item-button" onClick={() => (setIsCreating(!setIsCreating))}>Decline!</div>
-            <div className="create-item-button" onClick={() => (createObject('product',name,image,price,bestseller,about,category))}>Add to site!</div>
-        </div>
-        </>
-        }
+        </div>}
 
        
     </>
@@ -169,5 +142,6 @@ function itemsWrapper () {
 }
 
 export default itemsWrapper
+
 
 
