@@ -32,6 +32,19 @@
     margin: 0; 
 }
 
+.delete-cross {
+    width: 15px;
+    height: 15px;
+    position: fixed;
+    cursor: pointer;
+    transition: 400ms;
+}
+
+.delete-cross:hover {
+    width: 20px;
+    height: 20px;
+}
+
 
 
 

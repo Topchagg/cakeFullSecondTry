@@ -2,6 +2,9 @@
 
 
 function ItemInOrderList(props) {
+
+    const total = props.amount * props.priceOfItem
+    
     return (
         <div className="item-order-list-wrapper">
             <div className="order-img-wrapper">
@@ -12,7 +15,7 @@ function ItemInOrderList(props) {
                 Amount: <strong>{props.amount}</strong>
                 <div className="">
                 <p>Price for per: <strong>{props.priceOfItem}$</strong></p>
-                total price  <strong>{props.amount * props.priceOfItem}$</strong>
+                total price  <strong>{total.toFixed(2)}$</strong>
                 </div>
             </div>
         </div>

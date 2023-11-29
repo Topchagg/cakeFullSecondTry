@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 import BestsellerLine from './bestsellerLine'
 import AddButton from "./addButton"
+import {Link} from 'react-router-dom'
 
 import { cart, userAction } from '../store'
 
@@ -43,7 +44,7 @@ function ProductItem (props) {
         <div className="product-item-wrapper">
             <div className="product-img-wrapper">
                {isUpdate || <><div className="star-wrapper">{props.bestseller && <img  onMouseEnter={handleOnMouseUp} onMouseLeave={handleOnMouseDown} className='star' src="yellow-star.png" alt=""/>}{infoBestseller && <BestsellerLine/>}</div></>}
-                {isUpdate || <><img src={props.img} alt="" /></>}
+                {isUpdate || <><Link to={props.slug}><img className='product-img-wrapper' src={props.img} alt="" /></Link></>}
                 {isUpdate && 
                     <div className='update-form-wrapper'>
                         <form className='update-form' action="">

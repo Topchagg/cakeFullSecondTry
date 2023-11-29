@@ -19,6 +19,7 @@
 .product-img-wrapper {
     height: 440px;
     width: 440px;
+    border-radius: 20px;
 }
 
 

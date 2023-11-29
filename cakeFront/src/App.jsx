@@ -1,4 +1,5 @@
 import {Routes, Route} from 'react-router-dom'
+import { useEffect } from 'react'
 
 import HomePage from './pages/Home'
 import AboutPage from './pages/About'
@@ -6,6 +7,7 @@ import CatalogPage from './pages/Catalog'
 import DeliveryPage from './pages/Delivery'
 import LogInLogOutPage from './pages/logInPage'
 import ItemsWrapper from './sections/catalogItemsWrapper'
+import ItemPage from './pages/itemPage'
 
 
 import OrderPage from './pages/Order'
@@ -26,6 +28,14 @@ import Layout from './pages/layout'
 function App() {
 
 
+  useEffect(() => {
+    const isNull = localStorage.getItem('bigItems')
+    if(isNull == null){
+      localStorage.setItem('bigItems', '[]')
+      window.location.reload();
+    }
+  }),[]
+
   return (
     <>
     <Routes>
@@ -39,6 +49,7 @@ function App() {
 
 
           <Route path="catalog/:category" element={<ItemsWrapper/>}></Route>
+          <Route path="catalog/:category/:item" element={<ItemPage/>} ></Route>
 
           <Route path="orders" element={<OrderPage/>} ></Route>
           <Route path="orders/:id"  element={<OrderWrapper/>}></Route>

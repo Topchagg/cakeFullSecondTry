@@ -16,6 +16,7 @@ function ItemInCart(props) {
     const addItemIntoCart = cart((state) => state.addItemIntoCart)
     const changeAmountOfItem = cart((state) => state.changeAmountOfItem)
     const setLocalItemsData = cart((state) => state.setLocalItemsData)
+    const deleteItemInCart = cart((state) => state.deleteItemInCart)
     const restrictions = cart((state) => state.restrictions)
     const totalPrice = cart((state) => state.totalPrice)
     
@@ -31,6 +32,7 @@ function ItemInCart(props) {
     return (
         <>
             <div className="item-wrapper">
+            <div className="delete-cross-wrapper" onClick={() => (deleteItemInCart(props.name))}> <img className="delete-cross" src="/remove.png" alt="" /> </div>
                 <div className="">
                     <img className="item-img-wrapper-cart" src={props.img} alt="" />
                 </div>      
@@ -41,11 +43,10 @@ function ItemInCart(props) {
                 </div>
             </div>
             <div className="change-amount-wrapper">
-            <button className="decriment-btn" onClick={() => {changeAmountOfItem(props.name, amount, "decriment"),setAmount(parseInt(props.amount - 1))}}>Decriment</button>
+            <button className="add-button" onClick={() => {changeAmountOfItem(props.name, amount, "decriment"),setAmount(parseInt(props.amount - 1))}}></button>
             <div className="wrapper"><input className="change-amount" id="change-amount" type="number" min={0}    onChange={(e) => (setAmount(parseInt(e.target.value)))}/></div>
             <AddButton fullItem={props.fullItem} func={addItemIntoCart}/>
             </div>
-            <DeleteButton name={props.name} func={changeAmountOfItem}/>
         </>
     )    
 }

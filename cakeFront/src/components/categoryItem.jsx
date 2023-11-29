@@ -24,7 +24,7 @@ function CategoryItem(props) {
             </div>
             </Link>
             
-            <div className="title-wrapper">
+            <div className="title-category-wrapper">
                 <div className="title">{props.title}</div>
                 {isAdmin &&  <><button className="delete-btn" onClick={() => (setAttention(!attention))}>Delete</button></>}
                 {attention &&<><Attention decline={() => (setAttention(!attention))} id={props.id} img={props.img} message={"If u`ll click  you also delete all items that connected to this category! Are u sure?"} /></>}

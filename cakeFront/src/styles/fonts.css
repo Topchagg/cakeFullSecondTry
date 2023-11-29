@@ -11,3 +11,9 @@
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+  font-family: 'DancingScript';
+  src: url('/public//fonts//static/DancingScript-SemiBold.ttf');
+  font-style: italic;
+}

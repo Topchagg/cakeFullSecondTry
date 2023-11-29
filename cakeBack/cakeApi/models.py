@@ -13,11 +13,11 @@ class Category(models.Model):
 class Item(models.Model):
 
     nameOfItem = models.CharField(max_length=100)
-    priceOfItem = models.IntegerField()
+    priceOfItem = models.FloatField()
     imgOfItem = models.URLField(max_length=10000, blank=True, null=True)
     categoryOfItem = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
     BestsellerItem = models.BooleanField()
-    descriptionOfItem = models.CharField(max_length=2000)
+    descriptionOfItem = models.TextField(max_length=2000)
     slug = AutoSlugField(populate_from='nameOfItem')
 
 

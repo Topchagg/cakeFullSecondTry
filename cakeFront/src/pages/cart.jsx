@@ -39,10 +39,10 @@ function Cart () {
                             ORDER
                         </button>
                         <div className="total-price total">
-                            Total price: {totalPrice}$
+                            Total price {totalPrice.toFixed(2)}$
                         </div>
                         <div className="total-amount total">
-                            Total amount: {Amount}
+                            Total amount {Amount}
                         </div>
                     </div>
                 </div>

@@ -48,7 +48,7 @@ function OrderWrapper(props) {
                     </div>
                     <div className="general-information-wrapper">
                         <h2>General Information</h2>
-                        <p>Total price: <strong>{totalPrice}$</strong></p>
+                        <p>Total price: <strong>{totalPrice.toFixed(2)}$</strong></p>
                         <p>Amount of items: <strong>{amountOfItems}</strong></p>
                     </div>
                 </div>

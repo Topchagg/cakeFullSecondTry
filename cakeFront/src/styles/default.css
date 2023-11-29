@@ -4,5 +4,21 @@
     padding: 0;
     color: inherit;
     text-decoration: none;
-    font-family: 'inter'
+    font-family: 'NanumMyeongjo'
+}
+
+.small-text {
+    font-family: 'NanumMyeongjo';
+}
+
+.logo {
+    font-family: 'DancingScript';
+    font-weight: 100;
+}
+
+.loader {
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    opacity: 0.8;
 }

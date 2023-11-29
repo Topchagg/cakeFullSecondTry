@@ -8,10 +8,14 @@
     height: 100%;
 }
 
-.title-wrapper {
+.img {
+    border-radius: 50px;
+}
+
+.title-category-wrapper {
     height: 50px;
+    width: 91%;
     font-size: 32px;
-    border: solid gray 1px;
     text-align: center;
 
 }

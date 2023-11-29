@@ -2,6 +2,7 @@ import {create} from 'zustand'
 import {storage} from './firebase'
 import { v4 as uuidv4 } from 'uuid';
 import {ref,uploadBytes,getDownloadURL, deleteObject, getMetadata} from 'firebase/storage'
+import { json } from 'react-router-dom';
 
 
 export const categoryItemFetch = create((set) => ({
@@ -45,6 +46,7 @@ export const forShowCaseFetch = create((set) => ({
 export const productItemFetch = create((set) => ({
     
     neededItems: [],
+    neededItem: {},
     status: false,
     loaded: false,
     biggestPrice: 0,
@@ -66,6 +68,16 @@ export const productItemFetch = create((set) => ({
         const json = await result.json()
         set((state) => ({neededItems: json[0]}))
         set((state) => ({loaded: true}))
+    }
+   }),
+   fetchNeededItem: (slug) => set(async(state) => {
+    const result = await fetch(`http://127.0.0.1:8000/getItems/?slug=${slug}`)
+    const json = await result.json()
+    if(result.status === 404){
+        set((state) => ({status: !state.status}))
+    }
+    else {
+        set((state) => ({neededItem:json}))
     }
    })
 
@@ -130,6 +142,8 @@ export const fetchOrders = create((set) => ({
         if (response.status === 201) {
             set((state) => ({isCreate: true}))
             localStorage.setItem('bigItems', '[]')
+            window.location.reload();
+        
         } else {
             set((state) => ({raiseError: true}))
         }
@@ -156,10 +170,6 @@ export const fetchOrders = create((set) => ({
             console.log("Something went wrong")
         }
       })
-
-
-      
-
 }))
 
 
@@ -289,9 +299,9 @@ deleteItemInCart: (nameOfItem) => set(async(state) => {
 export const userAction = create((set) => ({
     isLogged: false,
     isCreated: undefined,
+    isAction: false,
     isAdmin: false,
     isLoading: false,
-    isCreated: undefined,
     userName: '',
     userEmail: '',
     imgURL: '',
@@ -345,7 +355,7 @@ export const userAction = create((set) => ({
                         isLogged: true,
                         isLoading: false
                     }))
-                    window.location.reload();
+                
                 } else {
                     console.error("Something went wrong");
                     set((state) => ({isLogged: false}))
@@ -381,9 +391,10 @@ export const userAction = create((set) => ({
         localStorage.setItem('acsessToken', '')
         localStorage.setItem('refreshToken', '')
         set((state) => ({isLogged: false}))
-        window.location.reload();
+    
     }),
     deleteObject: (id,typeOfObject,img) => set(async(state) => {
+        set((state) => ({isLoading:true}))
         const acsessToken = "Bearer " + localStorage.getItem('acsessToken')
         const result = await fetch(`http://127.0.0.1:8000/delete-object/?id=${id}&&typeOfObject=${typeOfObject}`,{
             method: "Delete",
@@ -393,13 +404,14 @@ export const userAction = create((set) => ({
             } 
         })
         if(result.ok){
-            console.log(img)
             getMetadata(ref(storage,img)).then((metadata) => {
                 const filePath = metadata.fullPath
                 const fileRef = ref(storage, filePath)
                 deleteObject(fileRef).then(() => {
                     console.log('Deleted');
-                    window.location.reload();
+                    set((state) => ({isAction: !state.isAction}))
+                    setTimeout(2000)
+                    set((state) => ({isLoading: false}))
                 })  
             })
         }
@@ -423,7 +435,6 @@ export const userAction = create((set) => ({
                 bestsellerItem: bestseller,
                 descriptionOfItem: description
             };
-            console.log('here')
         }
         else{
             data = {
@@ -445,7 +456,7 @@ export const userAction = create((set) => ({
         });
         if(result.ok){
             console.log('everything fine')   
-            window.location.reload(); 
+            set((state) => ({isAction: !state.isAction}))
         }
         else {
             console.log('something went wrong')
@@ -453,8 +464,8 @@ export const userAction = create((set) => ({
         }
     }), 
     createObject: (typeOfObject, name, img, price,  bestseller, description,category ) => set(async(state) => {
+        set((state) => ({isLoading:true}))
         const accessToken = "Bearer " + localStorage.getItem('acsessToken'); 
-        set((state) => ({isLoading: true}))
         if(typeOfObject === "category"){
             const imgRef = ref(storage, uuidv4());
             await uploadBytes(imgRef, img);
@@ -474,8 +485,9 @@ export const userAction = create((set) => ({
             })
             if(result.ok){
                 console.log('Created')
+                setTimeout(2000)
                 set((state) => ({isLoading: false}))
-                window.location.reload()
+                set((state) => ({isAction: !state.isAction}))
             }
             else {
                 console.log("Something went wrong")
@@ -490,10 +502,11 @@ export const userAction = create((set) => ({
                 price: price,
                 typeOfObject: typeOfObject,
                 img: imgURL,
-                descriptionOfItem: 'da',
+                descriptionOfItem: description,
                 category: category,
                 bestseller: bestseller
             }
+            console.log(data)
             const result = await fetch("http://127.0.0.1:8000/create-object/",{
                 method: "POST",
                 headers: {
@@ -504,7 +517,8 @@ export const userAction = create((set) => ({
             })
             if(result.ok){
                 console.log('Everything is fine!')
-                window.location.reload();
+                set((state) => ({isAction: !state.isAction}))
+                set((state) => ({isLoading: false}))
             }
             else{
                 console.log('something went wrong')

@@ -22,12 +22,18 @@ function LogInLogOutPage() {
     const isCreated = userAction((state) => state.isCreated)
   
     if(isLogged){
-        return <>U are logged! <button onClick={() => (logOut())}>Logout</button></>
+        return (<div className='logout-wrapper'>
+                    <div className="logout-icon-wrapper"><img src="/Union.png" alt="" /></div>
+                    <div className="logout-title">Logout</div>
+                    <div className="logout-greating">Hi</div>
+                    <div className="logout-text">Are you sure you want to log out from account?  </div>
+                    <button className="logout-btn" type='button' onClick={() => (logOut())}>Logout</button>
+                </div>)
     }
+    // <button onClick={() => (logOut())}>Logout</button>
 
     return (
         <div className="form-image-wrapper">
-            {isCreated && <>U are created an account</>}
             {isLoading && <IsLoading/>}
             <div className="registr-form-wrapper">{signIn || <RegistrationForm setSignIn={setSignIn} signIn={signIn} />}</div>
             <div className="login-form-wrapper">{signIn && <LoginForm setSignIn={setSignIn} signIn={signIn} />}</div>

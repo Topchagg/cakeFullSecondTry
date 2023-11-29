@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 import { cart, userAction } from '../store'
 
@@ -21,11 +22,40 @@ function Header () {
         
     },[])
 
+    const [showHeader, setShowHeader] = useState(true);
+  const [prevScrolLY, setPrevScrollY] = useState(0)
+  const [scrollY, setScrollY] = useState(0); 
+
+
+  function handleScroll() {
+    setScrollY(window.scrollY);
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    }
+  }, []); 
+
+  useEffect(() => {
+    setPrevScrollY(scrollY)
+    if(prevScrolLY >= scrollY){
+        setPrevScrollY(scrollY)
+        setShowHeader(true)
+    }
+    else {
+        setShowHeader(false)
+    }
+  },[scrollY])
+
 
     return (
 
         <>
-        <header className="header">
+        <AnimatePresence>
+        {showHeader && <motion.header initial={{y:-60, opacity:0}} animate={{y:0, opacity:1}} exit={{y:-60, opacity:0}} transition={{duration:0.4}} className="header">
             <div className="logo-wrapper">
                 <Link to='/cakefront'><div className="logo">Dorty</div></Link>
             </div>
@@ -45,7 +75,8 @@ function Header () {
                 </div>
                 {isSearch && <><form action=""><input className='header__search' type="text" placeholder='Write here'  onChange={(e) => (setSearchText(e.target.value))}/></form></>}
             </div>
-        </header>
+        </motion.header>}
+        </AnimatePresence>
         </>
 
     )

@@ -6,7 +6,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.db.models import Q
 from django.http import QueryDict
-
+from slugify import slugify
 
 from .models import *
 from .serializers import *
@@ -56,42 +56,49 @@ def getBestsellers(request):
 @api_view(['GET',])
 def getItems(request):
     if request.method == "GET":
-        slugOfNeededCategory = request.GET.get('category')
-        pkOfNeededCategory =  findPkOfNeededCategory(Category.objects.filter(nameOfCategory__iexact = slugOfNeededCategory))
+        itemSlug = request.GET.get('slug')
+        if(type(itemSlug) == str):
+            neededItem = Item.objects.get(slug=itemSlug)
+            serializedItems = SerializeItems(neededItem,many=False)
+            data = serializedItems.data
+            return Response(data)
+        else:
+            slugOfNeededCategory = request.GET.get('category')
+            pkOfNeededCategory =  findPkOfNeededCategory(Category.objects.filter(nameOfCategory__iexact = slugOfNeededCategory))
+            
+            allItems = Item.objects.filter(categoryOfItem_id = pkOfNeededCategory)
+
+
+            
+            biggestNumber = findBiggestNumber(allItems)
+
+            filterBestsellers = request.GET.get('bestsellerFilter')
+            maxPrice = request.GET.get('maxPrice')
+            minPrice = request.GET.get('minPrice')
+            lowHighFilter = request.GET.get('lowHighFilter')
+
+            filters = Q()
+            if filterBestsellers == 'true':
+                filters |= Q(BestsellerItem=True)
+            if minPrice:
+                filters &= Q(priceOfItem__gte=minPrice)
+            if maxPrice:
+                filters &= Q(priceOfItem__lte=maxPrice)
+
+            neededItems = allItems.filter(filters)
+
+            if lowHighFilter == 'lowToHigh':
+                neededItems = neededItems.filter().order_by('priceOfItem')
+            elif lowHighFilter == 'highToLow':
+                neededItems =  neededItems.filter().order_by('-priceOfItem')
+
         
-        allItems = Item.objects.filter(categoryOfItem_id = pkOfNeededCategory)
 
-
-        
-        biggestNumber = findBiggestNumber(allItems)
-
-        filterBestsellers = request.GET.get('bestsellerFilter')
-        maxPrice = request.GET.get('maxPrice')
-        minPrice = request.GET.get('minPrice')
-        lowHighFilter = request.GET.get('lowHighFilter')
-
-        filters = Q()
-        if filterBestsellers == 'true':
-            filters |= Q(BestsellerItem=True)
-        if minPrice:
-            filters &= Q(priceOfItem__gte=minPrice)
-        if maxPrice:
-            filters &= Q(priceOfItem__lte=maxPrice)
-
-        neededItems = allItems.filter(filters)
-
-        if lowHighFilter == 'lowToHigh':
-            neededItems = neededItems.filter().order_by('priceOfItem')
-        elif lowHighFilter == 'highToLow':
-            neededItems =  neededItems.filter().order_by('-priceOfItem')
-
-    
-
-        paginator = catalogPaginator()
-        paginatedData = paginator.paginate_queryset(neededItems, request)
-        serializedItems = SerializeItems(paginatedData, many=True)
-        data = serializedItems.data
-        return Response([data, biggestNumber], status=status.HTTP_200_OK)
+            paginator = catalogPaginator()
+            paginatedData = paginator.paginate_queryset(neededItems, request)
+            serializedItems = SerializeItems(paginatedData, many=True)
+            data = serializedItems.data
+            return Response([data, biggestNumber], status=status.HTTP_200_OK)
     
 @api_view(['GET',])
 def getOrders(request):
@@ -221,7 +228,7 @@ def postObject(request):
                 'priceOfItem': request.data['price'],
                 'imgOfItem': request.data['img'],
                 'bestsellerItem': request.data['bestseller'],
-                'descriptionOfItem': "da",
+                'descriptionOfItem': request.data['descriptionOfItem'],
                 'categoryOfItem': categoryData.data['pk']
             }
             query_dict = QueryDict('', mutable=True)
