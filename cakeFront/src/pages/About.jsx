@@ -1,7 +1,7 @@
-function AboutPage () {
+function About () {
     return (
         <h3>About</h3>
     )
 }
 
-export default AboutPage
+export default About

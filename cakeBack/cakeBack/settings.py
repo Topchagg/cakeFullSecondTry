@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,8 +40,6 @@ INSTALLED_APPS = [
     'cakeApi.apps.CakeapiConfig',
     'rest_framework',
     "corsheaders",
-    'djoser',
-    'rest_framework.authtoken',
 
 ]
 
@@ -133,29 +130,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://localhost:4173",
-    'http://localhost:5174'
+    "http://localhost:5173"
 ]
-
-REST_FRAMEWORK  = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ]
-
-}
-
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=5),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=15),
-    }
-
-DJOSER = {
-    'SERIALIZERS': {
-        'user': 'cakeApi.serializers.SerializeUser',
-        'current_user': 'cakeApi.serializers.SerializeCurrentUser',
-        'user_create': 'cakeApi.serializers.SerializeCreateUser',
-    },
-}
-
-AUTH_USER_MODEL = 'cakeApi.User'

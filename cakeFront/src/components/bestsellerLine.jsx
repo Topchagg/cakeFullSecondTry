@@ -1,5 +1,4 @@
-
-import '/src/styles/bestsellerLine.css'
+import '../styles/bestsellerLine.css'
 
 function BestsellerLine() {
     return (

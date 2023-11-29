@@ -1,9 +1,6 @@
 import CategoriesWrapper from "../sections/catalogCategoryWrapper"
 
-import '/src/styles/catalogCategoryWrapper.css'
-import '/src/styles/catalogItemsWrapper.css'
-
-function CatalogPage () {
+function Catalog () {
     return (
         <>
           <CategoriesWrapper/>  
@@ -11,4 +8,4 @@ function CatalogPage () {
     )
 }
 
-export default CatalogPage
+export default Catalog

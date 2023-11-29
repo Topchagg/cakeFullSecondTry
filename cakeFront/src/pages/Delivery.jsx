@@ -1,7 +1,7 @@
-function DeliveryPage () {
+function Delivery () {
     return (
         <h3></h3>
     )
 }
 
-export default DeliveryPage
+export default Delivery

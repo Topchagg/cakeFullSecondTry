@@ -1,0 +1,19 @@
+.home-comments-section {
+   width: 970px;
+   height: 540px;
+   margin: 0 auto; 
+   margin-top: 160px;
+   text-align: center;
+}
+
+.home-comments-section-large-text-wrapper {
+   width: 715px;
+   margin: 0 auto;
+}
+
+.comments-wrapper {
+   height: 370px;
+   width: 970px;
+   border: solid black 1px;
+   margin-top: 60px;
+}

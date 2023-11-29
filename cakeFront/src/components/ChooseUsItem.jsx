@@ -1,5 +1,4 @@
-
-import '/src/styles/chooseUsItem.css'
+import '../styles/ChooseUsItem.css'
 
 function ChooseUsItem (props) {
     return (

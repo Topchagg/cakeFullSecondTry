@@ -1,15 +1,19 @@
-import LinkButton from '../components/linkButton'
+import {Link} from 'react-router-dom'
 
-import { motion } from 'framer-motion'
+
+
+import '../styles/HomeOpenSection.css'
+
+import LinkButton from '../components/linkButton'
 
 function HomeOpenSection () {
     return (
         <div className="home-open-section">
             <div className="home-open-text-wrapper">
-                <motion.div initial={{x:-900, opacity:0}} animate={{x:0,opacity:1}} transition={{duration:0.3}} className="large-text">DELICIOUS CAKES TO ORDER !</motion.div>
-                <motion.div initial={{x:-900, opacity:0}} animate={{x:0,opacity:1}} transition={{duration:0.5}} className="small-text">Unique handmade cakes and cookies</motion.div>
+                <div className="large-text">DELICIOUS CAKES TO ORDER !</div>
+                <div className="small-text">Unique handmade cakes and cookies</div>
                 <div className="home-open-button-wrapper">
-                   <motion.div initial={{y:400, opacity:0}} animate={{y:0,opacity:1}} transition={{duration:0.4}} className="wrapper-link-btn"> <LinkButton  link={'/cakefront/catalog'} text={'Catalog'} ></LinkButton></motion.div>
+                    <LinkButton link={'/catalog'} text={'Catalog'} ></LinkButton>
                 </div>
             </div>  
             <div className="home-open-img-wrapper">

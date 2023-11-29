@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react'
 import { categoryItemFetch } from '../store'
-
+import '../styles/homeCatalogSection.css'
 
 
 import CategoryItem from '../components/categoryItem'
 
 function HomeCatalogSection () {
 
-
+    const [page, setPage] = useState(1)
     const fetchCategoryItems =  categoryItemFetch((state) => state.fetchCategoryItems)
     const categoryItems =  categoryItemFetch((state) => state.categoryItems)
 
     const [show, setShow] = useState(false)
 
     useEffect(() => {
-        fetchCategoryItems(1,'true')
+        fetchCategoryItems(page,'false')
     },[])
 
     return (
@@ -22,7 +22,7 @@ function HomeCatalogSection () {
             <div className="large-text">Catalog</div>
             <div className="catalog-items-wrapper">
                 { categoryItems.map((categoryItem) => (
-                    <CategoryItem key={categoryItem.pk} id={categoryItem.pk} img={categoryItem.imgOfCategory} slug={categoryItem.slug} link={'Catalog/' + categoryItem.slug} title={categoryItem.nameOfCategory}/> 
+                    <CategoryItem slug={categoryItem.slug} title={categoryItem.nameOfCategory} link={"Catalog/" + categoryItem.slug}/> 
                 ))}
             </div>
         </div>

@@ -1,11 +1,11 @@
 .categories-wrapper {
     display: grid;
     grid-template-columns: repeat(3, 390px);
-    grid-auto-rows: 640px;
+    grid-auto-rows: 520px;
+    width: 80%;
     justify-content: space-between;
     column-gap: 20px;
-    width: 90%;
-    margin-left: 4%;
+    margin: 80px 11%;
 } 
 
 .carousel-btn-wrapper {
@@ -13,27 +13,3 @@
     margin-left: 47.5%;
     margin-top: 100px;
 } 
-
-.creating-category-wrapper {
-    width: 800px;
-    height: 500px;  
-    margin: 0 auto;
-    margin-top: 100px;
-
-}
-
-.category-form-wrapper {
-    width: 800px;
-    height: 400px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.create-decline-buttons-wrapper {
-    display: flex;
-    width: 400px;
-    margin: 0 auto;
-    justify-content: space-around;
-    margin-top: 75px;
-}
