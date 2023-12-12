@@ -393,11 +393,11 @@ export const userAction = create((set) => ({
         set((state) => ({isLogged: false}))
     
     }),
-    deleteObject: (id,typeOfObject,img) => set(async(state) => {
+    deleteObject: (id,typeOfObject,img,setFuncShow) => set(async(state) => {
         set((state) => ({isLoading:true}))
         const acsessToken = "Bearer " + localStorage.getItem('acsessToken')
         const result = await fetch(`http://127.0.0.1:8000/delete-object/?id=${id}&&typeOfObject=${typeOfObject}`,{
-            method: "Delete",
+            method: "Delete",       
             headers: {  
                 'Content-Type': 'application/json',
                 'Authorization': acsessToken,
@@ -412,6 +412,7 @@ export const userAction = create((set) => ({
                     set((state) => ({isAction: !state.isAction}))
                     setTimeout(2000)
                     set((state) => ({isLoading: false}))
+                    setFuncShow(false)
                 })  
             })
         }
@@ -457,10 +458,10 @@ export const userAction = create((set) => ({
         if(result.ok){
             console.log('everything fine')   
             set((state) => ({isAction: !state.isAction}))
+            set((state) => ({isLoading:false}))
         }
         else {
             console.log('something went wrong')
-            set((state) => ({isLoading:false}))
         }
     }), 
     createObject: (typeOfObject, name, img, price,  bestseller, description,category ) => set(async(state) => {
@@ -485,9 +486,8 @@ export const userAction = create((set) => ({
             })
             if(result.ok){
                 console.log('Created')
-                setTimeout(2000)
-                set((state) => ({isLoading: false}))
                 set((state) => ({isAction: !state.isAction}))
+                set((state) => ({isLoading: false}))
             }
             else {
                 console.log("Something went wrong")
@@ -550,9 +550,4 @@ export const tools = create((set) =>({
             setPageFunc(1)
         }
     }),
-
-  
-    
-    
-
 }))

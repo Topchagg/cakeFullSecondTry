@@ -1,5 +1,5 @@
 .wrapper-category-item {
-    height: 502px;
+    height: 440px;
     width: 440px;
     margin-top: 60px;
 }
@@ -9,7 +9,7 @@
 }
 
 .img {
-    border-radius: 50px;
+    border-radius: 10px;
 }
 
 .title-category-wrapper {
@@ -17,7 +17,6 @@
     width: 91%;
     font-size: 32px;
     text-align: center;
-
 }
 
 .title {

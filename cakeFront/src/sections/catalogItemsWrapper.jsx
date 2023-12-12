@@ -18,7 +18,7 @@ function itemsWrapper () {
     const [image, setImage] = useState('')
     const [about, setAbout] = useState('')
     
-    function imageHandler(e) {
+    function imageHandle(e) {
         if(e.target.files[0]){
             setImage(e.target.files[0])
         }
@@ -77,18 +77,20 @@ function itemsWrapper () {
         }, 200);
 
         return () => clearTimeout(timer);
-    }, [minPrice, maxPrice, bestsellerFilter,lowHighFilter, isAction]);
+    }, [minPrice, maxPrice, bestsellerFilter,lowHighFilter]);
+
+   async function createObjectHandle()  {
+    await createObject('product',name,image,price,bestseller,about,category)
+    await fetchNeededItems(bestsellerFilter, minPrice, maxPrice, page, lowHighFilter, category);
+   }
 
     useEffect(() => {
         fetchNeededItems(bestsellerFilter, minPrice, maxPrice, page, lowHighFilter,category )
     }, [page])
 
     useEffect(() => {
-        console.log('check')
-    },[isLoading])
-
-    
-
+        fetchNeededItems(bestsellerFilter, minPrice, maxPrice, page, lowHighFilter, category);
+     },[isAction])
 
    return (
     <>
@@ -136,7 +138,7 @@ function itemsWrapper () {
                     <div className="upload-img-wrapper"><img src="/upload.png" alt="" /></div>
                 </div>
             </label>
-            <input id="upload-img" className='input-file' onChange={imageHandler} type="file" />
+            <input id="upload-img" className='input-file' onChange={imageHandle} type="file" />
             </div>
             <div className="line-wrapper">
                 <img src="/line.png" alt="" />
@@ -158,7 +160,7 @@ function itemsWrapper () {
         </div>
         <div className="buttons-wrapper">
             <div className="create-item-button" onClick={() => (setIsCreating(!setIsCreating))}>Decline!</div>
-            <div className="create-item-button" onClick={() => (createObject('product',name,image,price,bestseller,about,category))}>Add to site!</div>
+            <div className="create-item-button" onClick={() => (createObjectHandle()) }>Add to site!</div>
         </div>
         </>
         }

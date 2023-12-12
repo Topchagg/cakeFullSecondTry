@@ -14,6 +14,7 @@ function HomeChooseUsSection () {
         </div>
 
         <div className="banner-wrapper">
+            <img src="Banner.png" alt="" />
         </div>
         </>
     )

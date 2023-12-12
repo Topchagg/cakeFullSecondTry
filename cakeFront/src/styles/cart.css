@@ -8,6 +8,7 @@
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 1;
 }
 
 
@@ -15,14 +16,14 @@
     margin-top: 50px;
     width: 50%;
     height: 80%;
-    border: solid black 1px;
     background-color: white;
+    border: darkgray solid 3px;
+    border-radius: 50px;
 
 }
 
 .cart-tittle-wrapper {
     width: 100%;
-    border: solid lightgray 1px;
     text-align: center;
 }
 
@@ -42,19 +43,22 @@
     width: 150px;
     height: 50px;
     background-color: inherit;
-    border: solid black 1px;
+    border: solid gray 1px;
     cursor: pointer;
     transition: 400ms;
-    margin-top: 30px;
-    margin-left: 20px;
+    margin-top: 18px;
     font-size: 18px;
+    font-weight: 800;
+    background-color: rgb(238, 235, 235);
+    border-radius: 5px;
 }
 
 .button-buy:hover {
-    border-radius: 12px;
-} 
+    border-radius: 15px;
+}
 
 .total {
-    margin-top: 34px;
+    margin-top: 25px;
     font-size: 32px;
+    font-weight: 500;
 }

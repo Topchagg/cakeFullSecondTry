@@ -42,14 +42,17 @@ function CategoriesWrapper () {
         }
     }
 
-    // useEffect(() => {
-    //     fetchCategoryItems(page)
-    //     setIsCreating(!isCreating)
-    // },[isAction])
+    useEffect(() => {
+        fetchCategoryItems(page)
+        if(isCreating === true) {
+            setIsCreating(!isCreating)
+        }
+    },[isAction])
 
     return (
         <>
-           
+            {isAdmin && <div className='category-create-btn-wrapper'><button className='logout-btn' onClick={() => (setIsCreating(!isCreating))}>Create new</button></div>}
+           {isLoading && <IsLoading/>}
             {isCreating || 
             <>
                 <div className="categories-wrapper">
@@ -59,7 +62,6 @@ function CategoriesWrapper () {
                 </div>
                 <>
                 <div className="catalog-carousel-wrapper"><Carousel status={status} page={page} setPage={setPage} /></div>
-                {isAdmin && <><button className='update-btn create' onClick={() => (setIsCreating(!isCreating))}>Create new</button></>}
                 </>
             </>}
             {isCreating && 
@@ -81,8 +83,8 @@ function CategoriesWrapper () {
                 </div>
                 </div>
                 <div className="create-decline-buttons-wrapper">
-                    <button className="create-item-button"  onClick={() => (setIsCreating(!isCreating))}>Decline</button>
-                    <button className="create-item-button"  onClick={() => (createObject("category",name, image))}>Create</button>
+                    <button className="logout-btn"  onClick={() => (setIsCreating(!isCreating))}>Decline</button>
+                    <button className="logout-btn"  onClick={() => (createObject("category",name, image))}>Create</button>
                 </div>
             </div>
             </>}

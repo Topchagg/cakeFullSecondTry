@@ -23,9 +23,6 @@ function Cart () {
         <>
             <div className="cart-wrapper" onClick={() => {toggleShowCart()}}>
                 <div className="cart" onClick={(e) => (e.stopPropagation())} >
-                    {raiseError && <h1>Something went wrong, please order later!</h1>}
-                    {isCreate && <h1>U ordered! Thank you, we call you later!</h1>}
-                    {restrictions && <><h2>Please enter real quantity of needed product. If u have a problem with order call for this number 887-549-00-15</h2></>}
                     <div className="cart-tittle-wrapper">
                         <h1 className="cart-tittle" >Cart</h1>
                     </div>
@@ -35,12 +32,12 @@ function Cart () {
                         ))}
                     </div>
                     <div className="total-info-wrapper">
-                        <button className="button-buy" onClick={() => (createNewOrder(items))}>
-                            ORDER
-                        </button>
                         <div className="total-price total">
                             Total price {totalPrice.toFixed(2)}$
                         </div>
+                        <button className="button-buy" onClick={() => (createNewOrder(items))}>
+                            ORDER
+                        </button>
                         <div className="total-amount total">
                             Total amount {Amount}
                         </div>

@@ -48,9 +48,20 @@
 }
 
 .create-account-text {
-    color: blue;
+    /* color: blue;
     cursor: pointer;
+    text-decoration: underline;
+    transition: 400ms; */
+    font-weight: 900;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: 400ms;
 }
+
+.create-account-text:hover {
+    color: blue;
+}
+
 
 .form-block {
     margin-top: 10px

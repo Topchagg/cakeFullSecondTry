@@ -7,6 +7,7 @@
     position: fixed;
     background-color: lightgray;
     opacity: 0.8;
+    z-index: 1;
 }
 
 .logo {
@@ -22,9 +23,13 @@
 
 .nav-menu__item {
     margin-top: 25px;
-    color: black;
-    font-weight: 700;
+    color: rgb(16, 16, 16); 
     font-size: 18px;
+    transition: 400ms;
+}
+
+.nav-menu__item:hover {
+    color: rgb(49, 49, 177);
 }
 
 .icons-wrapper {
@@ -43,13 +48,15 @@
 .amount {
     border: solid 1px  ;
     border-radius: 100%;
-    background-color: red;
     font-size: 14px;
     font-weight: 800;
+    background-color: lightgray;
+    color: gray;
+    border: solid 2px;
     margin-left: -35px;
     margin-top: 20px;
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height:22px;
     text-align: center;
 }
 

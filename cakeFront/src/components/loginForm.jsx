@@ -16,7 +16,7 @@ function LoginForm (props) {
                 <div className="form-wrapper">
                     <div className="log-text-wrapper">
                         <div className="log-title"><>Login</></div>
-                        <div className="ask-account-text">Don`t have an account? <span onClick={() => (props.setSignIn(!props.signIn))} className='create-account-text'>Create now! </span>it takes less than a minute </div>
+                        <div className="ask-account-text">Don`t have an account? <span onClick={() => (props.setSignIn(!props.signIn))} className='create-account-text'>Create now</span>! it takes less than a minute </div>
                     </div>
                     <form className='form-block' action="">
                         <div className="register-input-wrapper">
@@ -25,7 +25,7 @@ function LoginForm (props) {
                         </div>
                         <div className="register-input-wrapper">
                             <div className="register-label">PASSWORD</div>
-                            <input className='register-form-input' onChange={(e) => {setUserPassword(e.target.value)}} type="text"/>
+                            <input className='register-form-input' onChange={(e) => {setUserPassword(e.target.value)}} type="password "/>
                         </div>
                     </form>
                 <button onClick={() => (sign(userFirstName, userPassword, '','','', 'in'))} className='register-btn'><span className='register-btn-text'>Login</span></button>

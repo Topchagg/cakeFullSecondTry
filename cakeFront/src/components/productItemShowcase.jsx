@@ -4,8 +4,10 @@ import { useState } from 'react'
 import BestsellerLine from './bestsellerLine'
 import AddButton from "./addButton"
 import {Link} from 'react-router-dom'
-
+import UpdateProductShow from './updateProductShow'
 import { cart, userAction } from '../store'
+import IsLoading from './isLoading'
+
 
 
 import '/src/styles/productItemShowcase.css'
@@ -26,6 +28,14 @@ function ProductItem (props) {
     const updateObject = userAction((state) => state.updateObject)
     const isLoading = userAction((state) => state.isLoading)
 
+    async function  handleUpdateObject()  {
+        await updateObject(props.id, "product",price,name,bestseller,img, props.img,'da',props.category)
+        setIsUpdate(!isUpdate)
+    }
+    async function handleDeleteObject() {
+        await deleteObject(props.id, "product", props.img)
+    }
+
     function handleOnMouseUp() {
         setInfoBestseller(!infoBestseller)
     }
@@ -42,29 +52,12 @@ function ProductItem (props) {
 
     return (
         <div className="product-item-wrapper">
+            {isLoading && <IsLoading/>}
             <div className="product-img-wrapper">
                {isUpdate || <><div className="star-wrapper">{props.bestseller && <img  onMouseEnter={handleOnMouseUp} onMouseLeave={handleOnMouseDown} className='star' src="yellow-star.png" alt=""/>}{infoBestseller && <BestsellerLine/>}</div></>}
                 {isUpdate || <><Link to={props.slug}><img className='product-img-wrapper' src={props.img} alt="" /></Link></>}
                 {isUpdate && 
-                    <div className='update-form-wrapper'>
-                        <form className='update-form' action="">
-                            <div className="input-wrapper">
-                                <label htmlFor="">Name: </label>
-                                <input onChange={(e) => (setName(e.target.value))} className='form-input' type="text" defaultValue={props.name} />
-                            </div>
-                            <div className="input-wrapper">
-                                <label htmlFor="">Price: </label>
-                                <input onChange={(e) => (setPrice(e.target.value))} className='form-input' type="number" defaultValue={props.price} />
-                              </div>
-                            <div className="input-wrapper">
-                                <label htmlFor="">Bestseller: </label>
-                                <input onClick={(e) => (setBestseller(!bestseller))} className='form-input' type="checkbox" checked={bestseller} />
-                            </div>
-                            <div className="input-wrapper">
-                                Image: <input className='input-form'  type="file" onChange={handleImage} />
-                            </div>
-                        </form>
-                    </div>
+                    <UpdateProductShow name={props.name} price={props.price} bestseller={bestseller}  setNameFunc={setName} setPriceFunc={setPrice} setBestsellerFunc={setBestseller} handleImage={handleImage} />
                     }
             </div>
             <div className="product-data-wrapper">
@@ -84,13 +77,22 @@ function ProductItem (props) {
             </div>
            {isUpdate ||
             <>
-            {isAdmin &&   <><button onClick={() => {deleteObject(props.id, "product", props.img )}} className='delete-btn'>Delete</button><button className='update-btn' onClick={() => (setIsUpdate(!isUpdate))}>Update</button></>}</>}
-            {isUpdate && <><button onClick={() => (updateObject(props.id, "product",price,name,bestseller,img, props.img,'da',props.category))} 
-            className='update-btn'>Commit</button> <button className='delete-btn' onClick={() => (setIsUpdate(!isUpdate))} >Deciline</button>
-            {isLoading && <>Loading please. wait...</>}
+            {isAdmin &&   
+            <div className='buttons-wrapper'>
+                <button onClick={() => {handleDeleteObject()}} className='logout-btn'>Delete</button>
+                <button className='logout-btn' onClick={() => (setIsUpdate(!isUpdate))}>Update</button>
+            </div>}
             </>}
+            {isUpdate && <div className='buttons-wrapper'>
+                <button onClick={() => (handleUpdateObject())} className='logout-btn'>Commit</button> 
+                <button className='logout-btn' onClick={() => (setIsUpdate(!isUpdate))} >Deciline</button>
+            </div>}
         </div>
     )
 }
 
 export default ProductItem
+
+// <div className='update-form-wrapper'>
+                   
+                    // </div>

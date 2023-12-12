@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { categoryItemFetch } from '../store'
+import { categoryItemFetch, userAction} from '../store'
 
 
 
@@ -10,12 +10,13 @@ function HomeCatalogSection () {
 
     const fetchCategoryItems =  categoryItemFetch((state) => state.fetchCategoryItems)
     const categoryItems =  categoryItemFetch((state) => state.categoryItems)
-
-    const [show, setShow] = useState(false)
+    const isAction = userAction((state) => state.isAction)
 
     useEffect(() => {
         fetchCategoryItems(1,'true')
-    },[])
+    },[isAction])
+
+    
 
     return (
         <div className="home-catalog-section">
